@@ -15,6 +15,8 @@ module.exports = function (grunt) {
     // Time how long tasks take. Can help when optimizing build times
     require('time-grunt')(grunt);
 
+    grunt.loadNpmTasks('grunt-karma-coveralls');
+
     // Define the configuration for all the tasks
     grunt.initConfig({
 
@@ -177,7 +179,15 @@ module.exports = function (grunt) {
                 dest: 'dist/angular-validation-messages.min.js'
             }
         },
-
+        coveralls: {
+            options: {
+                debug: true,
+                coverage_dir: 'coverage',
+                dryRun: true,
+                force: true,
+                recursive: true
+            }
+        },
         // Test settings
         karma: {
             unit: {
@@ -196,7 +206,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
-            'bowerInstall',
+          //  'bowerInstall',
             'connect:livereload',
             'watch'
 
@@ -215,7 +225,8 @@ module.exports = function (grunt) {
         'concat',
         'ngmin',
         'uglify',
-        'test'
+        'test',
+        'coveralls'
     ]);
 
     grunt.registerTask('default', [
