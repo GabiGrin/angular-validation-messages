@@ -196,7 +196,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
-            //   'bowerInstall',
+            'bowerInstall',
             'connect:livereload',
             'watch'
 

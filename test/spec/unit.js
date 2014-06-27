@@ -107,7 +107,7 @@ describe('collapse directive', function () {
         expect(validationParent).toBeHidden();
     });
 
-    iit('should show a custom message if available',function(){
+    it('should show a custom message if available',function(){
         var requiredMessage='Gotta fill this one',
             badEmailMessage='Not a valid email!',
             input = createInput('email', 'text', 'required messages="{required:\''+requiredMessage+'\',email:\''+badEmailMessage+'\'}"'),
