@@ -107,8 +107,23 @@ describe('collapse directive', function () {
         expect(validationParent).toBeHidden();
     });
 
-    function createInput(type, name, extra) {
+    iit('should show a custom message if available',function(){
+        var requiredMessage='Gotta fill this one',
+            badEmailMessage='Not a valid email!',
+            input = createInput('email', 'text', 'required messages="{required:\''+requiredMessage+'\',email:\''+badEmailMessage+'\'}"'),
+            validationParent = getValidationNode(input)[0];
 
+        changeValueAndBlur('',input);
+        expect(validationParent).toBeVisible();
+        expect(validationParent).toHaveText(requiredMessage);
+        changeValueAndBlur('myEmail@myHost.com',input);
+        expect(validationParent).toBeHidden();
+        changeValueAndBlur('myEmailMyHost',input);
+        expect(validationParent).toBeVisible();
+        expect(validationParent).toHaveText(badEmailMessage);
+    });
+
+    function createInput(type, name, extra) {
         return $compile('<input vt ng-model="value" type="' + type + '" name="' + name + '" ' + extra + ' />')(scope, function (elem, scope) {
             form.append(elem);
         });

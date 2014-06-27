@@ -8,6 +8,7 @@ angular.module('validations')
 
         return {
             scope: {
+                messages:'='
             },
             require: ['ngModel', '^vtForm', '^form'],
             compile: function (elm, attrs) {
@@ -108,16 +109,16 @@ angular.module('validations')
                     }
 
                     function getMessage() {
-                        var errors = [], fieldValue = ngModelCtrl.$viewValue, type;
+                        var errors = [], fieldValue = ngModelCtrl.$viewValue, type,msg;
                         angular.forEach(ngModelCtrl.$error, function (val, key) {
                             if (val) {
                                 errors.push(key);
                             }
                         });
                         type = ValidationsHelper.getPrioritizedErrorType(errors);
+                        msg=scope.messages&&scope.messages[type] || vtFormCtrl.getMessage(type) || ValidationsHelper.getMessage(type);
 
-
-                        return ValidationsHelper.renderMessage(type, elm, attrs.fieldName, fieldValue);
+                        return ValidationsHelper.renderMessage(msg,type, elm, attrs.fieldName, fieldValue);
                     }
                 }
             }

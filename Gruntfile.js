@@ -38,9 +38,16 @@ module.exports = function (grunt) {
                     livereload: true
                 }
             },
+            module:{
+                files:['src/*.js'],
+                tasks:'build',
+                options:{
+                    livereload:true
+                }
+            },
             jsTest: {
-                files: ['test/spec/{,*/}*.js'],
-                tasks: ['newer:jshint:test', 'karma']
+                files: ['test/spec/{,*/}*.js','karma.conf.js'],
+                tasks: ['test']
             },
             styles: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
@@ -131,7 +138,6 @@ module.exports = function (grunt) {
         },
 
 
-
         // Automatically inject Bower components into the app
         bowerInstall: {
             app: {
@@ -157,8 +163,12 @@ module.exports = function (grunt) {
 
         concat: {
             dist: {
-                src: ['src/*.js','!src/*old*.js'],
+                src: ['src/*.js', '!src/*old*.js'],
                 dest: 'dist/angular-validation-messages.js'
+            },
+            copyhack: {
+                src: ['dist/angular-validation-messages.js'],
+                dest: 'demo/angular-validation-messages.js'
             }
         },
         uglify: {
@@ -181,14 +191,15 @@ module.exports = function (grunt) {
     grunt.registerTask('serve', function (target) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'connect:dist:keepalive']);
+
         }
 
         grunt.task.run([
             'clean:server',
-            'bowerInstall',
-            'concurrent:server',
+            //   'bowerInstall',
             'connect:livereload',
             'watch'
+
         ]);
     });
 
@@ -203,12 +214,14 @@ module.exports = function (grunt) {
         'clean:dist',
         'concat',
         'ngmin',
-        'uglify'
+        'uglify',
+        'test'
     ]);
 
     grunt.registerTask('default', [
         //'newer:jshint',
         'test',
-        'build'
+        'build',
+        'serve'
     ]);
 };

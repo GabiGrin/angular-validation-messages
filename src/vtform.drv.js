@@ -8,7 +8,8 @@ angular.module('validations')
             restrict: 'A',
             require: 'form',
             scope: {
-                notificationTemplate: '@'
+                notificationTemplate: '@',
+                messages: '='
             },
             priority: -1, //get it before the ngsubmit
             controller: function ($scope) {
@@ -30,7 +31,11 @@ angular.module('validations')
 
                 this.getNotificationTemplate = function () {
                     return $scope.notificationTemplate;
-                }
+                };
+
+                this.getMessage = function (type) {
+                    return $scope.messages && $scope.messages[type];
+                };
 
             },
             compile: function () {

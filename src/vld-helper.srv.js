@@ -15,13 +15,16 @@ angular.module('validations')
         };
 
 
-        var messages = {
+        var errorMessages = {
                 email: '%FieldValue%" is not a valid e-mail address. You must enter a valid email!',
                 required: 'Field %FieldName% is required!',
                 number: 'Please insert a valid number',
                 fallback: 'There is a problem with this field. Please try again',
                 min: 'This field must be higher than %minimum%',
                 max: 'This field must be lower than %maximum%'
+            },
+            validMessages = {
+                default: 'Good job!'
             },
             messageTriggers = {
                 onBlur: 'blur',
@@ -47,12 +50,12 @@ angular.module('validations')
 
 
         this.setMessage = function (type, message) {
-            messages[type] = message;
+            errorMessages[type] = message;
             return this;
         };
 
         this.getMessage = function (type) {
-            return messages[type];
+            return errorMessages[type];
         };
 
         this.setCustomRenderer = function (type, fn) {
@@ -84,44 +87,44 @@ angular.module('validations')
             if (!/{{\s*errorMessage\s*}}/.test(template)) {
                 console.warn('Overriden templates must include {{errorMessage}} to properly display messages!');
             }
-            defaultOptions.notificationTemplate=template;
+            defaultOptions.notificationTemplate = template;
+        };
+
+        this.setValidNotificationTemplate = function (template) {
+            if (!/{{\s*validMessage\s*}}/.test(template)) {
+                console.warn('Overriden templates must include {{validMessage}} to properly display messages!');
+            }
+            defaultOptions.validMessageTemplate = template;
         };
 
 
         this.$get = function () {
-            return {
-                renderMessage: function (type, element, fieldName, fieldValue) {
-                    var controlType = element.attr('type'),
-                        msg = '';
+            //todo, separate to getType > getMessage > renderMessage
+
+            var api = {
+                getType: function (type, element) {
+                    //add override to types based on the element. i.e, when an invalid number is entered, the error will be required and not number.
+                    return element.attr('type') == 'number' ? 'number' : type;
+                },
+                getMessage: function (type) {
+                    return errorMessages[type] || errorMessages.fallback;
+                },
+                renderMessage: function (message, type, element, fieldName, fieldValue) {
+                    var msg = message
+                        .replace('%FieldValue%', fieldValue)
+                        .replace('%FieldName%', fieldName || '');
 
                     switch (type) {
                         case 'min':
-                            msg = getMessage(type)
-                                .replace('%minimum%', element.attr('min'));
+                            msg.replace('%minimum%', element.attr('min'));
                             break;
 
                         case 'max':
-                            msg = getMessage(type)
-                                .replace('%maximum%', element.attr('max'));
-                            break;
-                        default:
-                            if (controlType == 'number') msg = getMessage('number');
-                            else if (customMessageRenders[type]) {
-                                msg = customMessageRenders[type](fieldValue, element, fieldName);
-                            }
-                            else msg = getMessage(type);
+                            msg.replace('%maximum%', element.attr('max'));
                             break;
                     }
 
                     return msg;
-
-
-                    function getMessage(type) {
-                        var msg = messages[type] || messages.fallback;
-                        return msg
-                            .replace('%FieldValue%', fieldValue)
-                            .replace('%FieldName%', fieldName || '');
-                    }
                 },
                 defaultOptions: defaultOptions,
                 messageTriggers: messageTriggers,
@@ -131,33 +134,12 @@ angular.module('validations')
                     });
                     return errors[0];
                 }
-            }
+            };
+
+            return api;
         };
 
 
-    })
-
-//todo - remove
-    .
-    directive('blacklist', function () {
-        return {
-            require: 'ngModel',
-            link: function (scope, elem, attr, ngModel) {
-                var blacklist = attr.blacklist.split(',');
-
-                //For DOM -> model validation
-                ngModel.$parsers.unshift(function (value) {
-                    var valid = blacklist.indexOf(value) === -1;
-                    ngModel.$setValidity('blacklist', valid);
-                    return valid ? value : undefined;
-                });
-
-                //For model -> DOM validation
-                ngModel.$formatters.unshift(function (value) {
-                    ngModel.$setValidity('blacklist', blacklist.indexOf(value) === -1);
-                    return value;
-                });
-            }
-        };
     });
+
 
