@@ -165,7 +165,7 @@ module.exports = function (grunt) {
 
         concat: {
             dist: {
-                src: ['src/*.js', '!src/*old*.js'],
+                src: ['src/module.js', 'src/*.js','!src/*old*.js'],
                 dest: 'dist/angular-validation-messages.js'
             },
             copyhack: {

@@ -5,7 +5,7 @@
 
 (function(){
  'use strict';
- angular.module('validations',[]);
+ angular.module('gg.vmsgs',[]);
 
 
 })();

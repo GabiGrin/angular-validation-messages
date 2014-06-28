@@ -3,7 +3,7 @@ describe('collapse directive', function () {
     var scope, $compile, $timeout;
     var form, input;
 
-    beforeEach(module('validations'));
+    beforeEach(module('gg.vmsgs'));
     beforeEach(inject(function (_$rootScope_, _$compile_, _$timeout_) {
         scope = _$rootScope_;
         $compile = _$compile_;
@@ -11,7 +11,7 @@ describe('collapse directive', function () {
     }));
 
     beforeEach(function () {
-        form = $compile('<form vt-form name="testForm" novalidate></form>')(scope);
+        form = $compile('<form vmsg-form name="testForm" novalidate></form>')(scope);
         angular.element(document.body).append(form);
         scope.value = null;
     });
@@ -124,7 +124,7 @@ describe('collapse directive', function () {
     });
 
     function createInput(type, name, extra) {
-        return $compile('<input vt ng-model="value" type="' + type + '" name="' + name + '" ' + extra + ' />')(scope, function (elem, scope) {
+        return $compile('<input vmsg ng-model="value" type="' + type + '" name="' + name + '" ' + extra + ' />')(scope, function (elem, scope) {
             form.append(elem);
         });
     }

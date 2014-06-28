@@ -15,8 +15,8 @@ Validation directive goals:
 
 --Next:
 
--Decide, and switch to a more isolated module name
--Rename directive names
+-V Decide, and switch to a more isolated module name
+-V Rename directive names
 -Upload demo page to github.io
 -Work on readme, add specs
 -Use JSHint + JSLint
