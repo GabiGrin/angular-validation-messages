@@ -29,112 +29,131 @@
                 compile: function (elm, attrs) {
 
 
-                    return function link(scope, elm, attrs, ctrls) {
+                    return{
+                        pre:function prelink(scope,elm,attrs){
+                            scope.showMessage=false;
+                            scope._forceShowMessage=false;
+                            scope.errorMessage = '';
+                        },
+                        post:function link(scope, elm, attrs, ctrls) {
 
-                        var ngModelCtrl = ctrls[0],
-                            vtFormCtrl = ctrls[1],
-                            options = {
-                                messageTrigger: attrs.messageTrigger || vtFormCtrl.getControlMessageTrigger() || defaultOptions.inputMessageTrigger
-                            },
-                            messageParent = $compile(defaultOptions.baseTemplate)(scope),
-                            messageElement = $compile(attrs.notificationTemplate || vtFormCtrl.getNotificationTemplate() || defaultOptions.notificationTemplate)(scope);
+                            var ngModelCtrl = ctrls[0],
+                                vtFormCtrl = ctrls[1],
+                                options = {
+                                    messageTrigger: attrs.messageTrigger || vtFormCtrl.getControlMessageTrigger() || defaultOptions.inputMessageTrigger
+                                },
+                                messageParent = $compile(defaultOptions.baseTemplate)(scope),
+                                messageElement = $compile(attrs.notificationTemplate || vtFormCtrl.getNotificationTemplate() || defaultOptions.notificationTemplate)(scope);
 
 
-                        messageParent.append(messageElement);
-                        elm.after(messageParent);
-                        elm.data('vtValidationNode', messageParent);
+                            messageParent.append(messageElement);
+                            elm.after(messageParent);
+                            elm.data('vtValidationNode', messageParent);
 
-                        scope.showMessage = false;
-                        scope._forceShowMessage = false;
-                        scope.errorMessage = '';
+                            //set up the triggers that will show the message
+                            switch (options.messageTrigger) {
+                                case messageTriggers.onBlur:
+                                    elm.on('blur', function () {
+                                        scope.$apply(function () {
+                                            showMessageIfNeeded();
+                                        });
+                                    });
+                                    break;
 
-                        window.dirScope = scope;
-
-                        //set up the triggers that will show the message
-                        switch (options.messageTrigger) {
-                            case messageTriggers.onBlur:
-                                elm.on('blur', function () {
-                                    scope.$apply(function () {
+                                /* TODO - decide if this trigger is needed. Doesn't sound useful
+                                case messageTriggers.immediate:
+                                    scope.$watch(function () {
+                                        return ngModelCtrl.$valid;
+                                    },function(){
                                         showMessageIfNeeded();
                                     });
-                                });
-                                break;
-                            case messageTriggers.immediate:
-                                scope.$watch(function () {
-                                    return ngModelCtrl.$viewValue
-                                }, showMessageIfNeeded);
-                                $timeout(showMessageIfNeeded);//TODO - think why this is needed, because it doesn't work otherwise!
-                                break;
-                            case messageTriggers.onDirty:
-                            {
-                                scope.$watch(function () {
-                                    return ngModelCtrl.$viewValue
-                                }, function () {
-                                    if (ngModelCtrl.$dirty) {
-                                        showMessageIfNeeded();
-                                    }
-                                })
+                                    //$timeout(showMessageIfNeeded);//TODO - think why this is needed, because it doesn't work otherwise!
+                                    break; */
+                                case messageTriggers.onDirty:
+                                    scope.$watch(function () {
+                                        return ngModelCtrl.$viewValue
+                                    }, function () {
+                                        if (ngModelCtrl.$dirty) {
+                                            showMessageIfNeeded();
+                                        }
+                                    });
+                                    break;
+                                case messageTriggers.dontShow:
+                                    break;
+                                default:
+                                    throw new Error('Message trigger ' + options.messageTrigger + ' is not supported!');
+                                    break;
                             }
-                                break;
-                        }
 
-                        scope.forceShowMessage = function () {
-                            scope._forceShowMessage = ngModelCtrl.$invalid;
-                            scope.errorMessage = getMessage();
-                        };
+                            scope.$watch(function () {
+                                return ngModelCtrl.$valid;
+                            }, function (isValid) {
+                                if (isValid) {
+                                    showMessageIfNeeded();
+                                }
 
-                        scope.hideMessage = function () {
-                            scope._forceShowMessage = false;
-                            scope.showMessage = false;
-                        };
+                            });
 
-                        scope.$watch(function () {
-                            return ngModelCtrl.$pristine;
-                        }, function (isPristine) {
-                            if (isPristine) {
-                                scope.showMessage = false;
-                                scope._forceShowMessage = false;
-                            }
-                        });
-
-                        scope.setPristine = function () {
-                            ngModelCtrl.$setPristine();
-                        };
-
-                        scope.isInvalid = function () {
-                            return ngModelCtrl.$invalid;
-                        };
-
-
-                        //register the control into the parent directive
-                        vtFormCtrl.addControl({control: scope, element: elm, messageElement: messageElement});
-
-
-                        function showMessageIfNeeded() {
-                            if (ngModelCtrl.$invalid) {
-                                scope.showMessage = true;
+                            scope.forceShowMessage = function () {
+                                scope._forceShowMessage = ngModelCtrl.$invalid;
                                 scope.errorMessage = getMessage();
-                                elm.addClass(defaultOptions.errorClass);
-                            }
-                            else {
-                                scope.showMessage = false;
-                                scope.errorMessage = '';
-                                elm.removeClass(defaultOptions.errorClass);
-                            }
-                        }
+                            };
 
-                        function getMessage() {
-                            var errors = [], fieldValue = ngModelCtrl.$viewValue, type, msg;
-                            angular.forEach(ngModelCtrl.$error, function (val, key) {
-                                if (val) {
-                                    errors.push(key);
+                            scope.hideMessage = function () {
+                                scope._forceShowMessage = false;
+                                scope.showMessage = false;
+                            };
+
+                            scope.$watch(function () {
+                                return ngModelCtrl.$pristine;
+                            }, function (isPristine) {
+                                if (isPristine) {
+                                    scope.showMessage = false;
+                                    scope._forceShowMessage = false;
                                 }
                             });
-                            type = ValidationsHelper.getPrioritizedErrorType(errors);
-                            msg = scope.messages && scope.messages[type] || vtFormCtrl.getMessage(type) || ValidationsHelper.getMessage(type);
 
-                            return ValidationsHelper.renderMessage(msg, type, elm, attrs.fieldName, fieldValue);
+                            scope.setPristine = function () {
+                                ngModelCtrl.$setPristine();
+                            };
+
+                            scope.isInvalid = function () {
+                                return ngModelCtrl.$invalid;
+                            };
+
+
+                            //register the control into the parent directive
+                            vtFormCtrl.addControl({control: scope, element: elm, messageElement: messageElement});
+
+
+                            function showMessageIfNeeded() {
+                                if (ngModelCtrl.$invalid) {
+                                    scope.showMessage = true;
+                                    scope.errorMessage = getMessage();
+                                    elm.addClass(defaultOptions.errorClass);
+                                }
+                                else {
+                                    scope.showMessage = false;
+                                    scope.errorMessage = '';
+                                    elm.removeClass(defaultOptions.errorClass);
+                                }
+                            }
+
+                            function getMessage() {
+                                var errors = [], fieldValue = ngModelCtrl.$viewValue, type, msg;
+                                angular.forEach(ngModelCtrl.$error, function (val, key) {
+                                    if (val) {
+                                        errors.push(key);
+                                    }
+                                });
+                                type = ValidationsHelper.getPrioritizedErrorType(errors);
+                                msg = scope.messages && scope.messages[type] || vtFormCtrl.getMessage(type) || ValidationsHelper.getMessage(type);
+
+                                return ValidationsHelper.renderMessage(msg, type, elm, attrs.fieldName, fieldValue);
+                            }
                         }
+
+
                     }
                 }
             }
@@ -211,6 +230,7 @@
                                         fn(scope, {$event: event});
                                         //fixme - this causes a dependency with jQuery. Couldn't cancel the even without it..
                                         e.stopImmediatePropagation();
+
                                         e.preventDefault();
 
                                         if (defaultOptions.scrollToFirstError) {
@@ -225,7 +245,6 @@
                                         }
 
                                         if (animateClass) {
-                                            console.log('ani', animateClass);
                                             angular.forEach(scope.controls, function (obj) {
                                                 var msgElm = obj.messageElement;
                                                 if (obj.control.isInvalid()) {
@@ -290,7 +309,7 @@
 
 
             var errorMessages = {
-                    email: '%FieldValue%" is not a valid e-mail address. You must enter a valid email!',
+                    email: '"%FieldValue%" is not a valid e-mail address. You must enter a valid email!',
                     required: 'Field %FieldName% is required!',
                     number: 'Please insert a valid number',
                     fallback: 'There is a problem with this field. Please try again',

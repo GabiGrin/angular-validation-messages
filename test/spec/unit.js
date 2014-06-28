@@ -61,6 +61,18 @@ describe('collapse directive', function () {
         expect(validationParent).toBeHidden();
     });
 
+    it('should show validation message but hide it as soon as the field is valid', function () {
+
+        var input = createInput('text', 'text', 'required'),
+            validationParent = getValidationNode(input)[0];
+        scope.$digest();
+        changeValueAndBlur('', input);
+        expect(validationParent).toBeVisible();
+        scope.value = 'something';
+        scope.$digest();
+        expect(validationParent).toBeHidden();
+    });
+
 
     it('should show validation message on minimum length and hide on complete', function () {
         var input = createInput('text', 'text', 'ng-minlength="10"'),
@@ -107,24 +119,58 @@ describe('collapse directive', function () {
         expect(validationParent).toBeHidden();
     });
 
-    it('should show a custom message if available',function(){
-        var requiredMessage='Gotta fill this one',
-            badEmailMessage='Not a valid email!',
-            input = createInput('email', 'text', 'required messages="{required:\''+requiredMessage+'\',email:\''+badEmailMessage+'\'}"'),
+    it('should show a custom message if available', function () {
+        var requiredMessage = 'Gotta fill this one',
+            badEmailMessage = 'Not a valid email!',
+            input = createInput('email', 'text', 'required messages="{required:\'' + requiredMessage + '\',email:\'' + badEmailMessage + '\'}"'),
             validationParent = getValidationNode(input)[0];
 
-        changeValueAndBlur('',input);
+        changeValueAndBlur('', input);
         expect(validationParent).toBeVisible();
         expect(validationParent).toHaveText(requiredMessage);
-        changeValueAndBlur('myEmail@myHost.com',input);
+        changeValueAndBlur('myEmail@myHost.com', input);
         expect(validationParent).toBeHidden();
-        changeValueAndBlur('myEmailMyHost',input);
+        changeValueAndBlur('myEmailMyHost', input);
         expect(validationParent).toBeVisible();
         expect(validationParent).toHaveText(badEmailMessage);
     });
 
-    function createInput(type, name, extra) {
-        return $compile('<input vmsg ng-model="value" type="' + type + '" name="' + name + '" ' + extra + ' />')(scope, function (elem, scope) {
+    it('should use custom triggers if available', function () {
+        var triggers = ['blur', 'dirty', 'none'], helper = {};
+        angular.forEach(triggers, function (trigger) {
+            var input = createInput('email', trigger + 'Control', 'required message-trigger="' + trigger + '"', trigger + 'Value');
+            helper[trigger] = {input: input, validationParent: getValidationNode(input)[0]}
+        });
+        scope.$digest();
+        expect(helper.blur.validationParent).toBeHidden();
+        expect(helper.dirty.validationParent).toBeHidden();
+        expect(helper.none.validationParent).toBeHidden();
+
+        scope.testForm.dirtyControl.$setViewValue('something');
+        scope.testForm.blurControl.$setViewValue('something');
+        scope.testForm.noneControl.$setViewValue('something');
+
+        scope.$digest();
+
+        expect(helper.blur.validationParent).toBeHidden();
+        expect(helper.dirty.validationParent).toBeVisible();
+        expect(helper.none.validationParent).toBeHidden();
+
+        helper.blur.input.triggerHandler('blur');
+        helper.none.input.triggerHandler('blur');
+        scope.$digest();
+        expect(helper.blur.validationParent).toBeVisible();
+        expect(helper.none.validationParent).toBeHidden();
+
+        //now after submit the last one should be visible
+        form.triggerHandler('submit');
+
+        expect(helper.none.validationParent).toBeVisible();
+    });
+
+    function createInput(type, name, extra, binding) {
+        var binding = binding || 'value';
+        return $compile('<input vmsg ng-model="' + binding + '" type="' + type + '" name="' + name + '" ' + extra + ' />')(scope, function (elem, scope) {
             form.append(elem);
         });
     }

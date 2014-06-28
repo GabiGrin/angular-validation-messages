@@ -11,8 +11,8 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
+            'test/lib/jquery.js',
             'test/lib/angular.js',
-            //   'test/lib/jquery.js',
             'test/lib/angular-mocks.js',
             'test/lib/jasmine-dom.js',
 //      'test/lib/angular-scenario.js',
@@ -43,13 +43,13 @@ module.exports = function (config) {
         // - Safari (only Mac)
         // - PhantomJS
         // - IE (only Windows)
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome'],
 
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
         singleRun: true,
-        reporters:['coverage'],
+        reporters:['progress','coverage'],
         preprocessors: {
             // source files, that you wanna generate coverage for
             // do not include tests or libraries

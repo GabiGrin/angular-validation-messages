@@ -68,6 +68,7 @@
                                         fn(scope, {$event: event});
                                         //fixme - this causes a dependency with jQuery. Couldn't cancel the even without it..
                                         e.stopImmediatePropagation();
+
                                         e.preventDefault();
 
                                         if (defaultOptions.scrollToFirstError) {
@@ -82,7 +83,6 @@
                                         }
 
                                         if (animateClass) {
-                                            console.log('ani', animateClass);
                                             angular.forEach(scope.controls, function (obj) {
                                                 var msgElm = obj.messageElement;
                                                 if (obj.control.isInvalid()) {

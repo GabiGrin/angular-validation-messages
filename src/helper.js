@@ -19,7 +19,7 @@
 
 
             var errorMessages = {
-                    email: '%FieldValue%" is not a valid e-mail address. You must enter a valid email!',
+                    email: '"%FieldValue%" is not a valid e-mail address. You must enter a valid email!',
                     required: 'Field %FieldName% is required!',
                     number: 'Please insert a valid number',
                     fallback: 'There is a problem with this field. Please try again',

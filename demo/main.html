@@ -130,8 +130,8 @@
             </div>
             <div class="form-group">
                 <label>Favorite Fruit:</label>
-                <input class="form-control" ng-model="fourthExample.fruit" vmsg type="text" ng-maxlength="5" required message-trigger="immediate" />
-                <p class="help-block">And this one will show immediately</p>
+                <input class="form-control" ng-model="fourthExample.fruit" vmsg type="text"  ng-maxlength="5" required message-trigger="blur"/>
+                <p class="help-block">And this one will show only on blur</p>
             </div>
             <div class="pull-right">
                 <button class="btn btn-default" type="button" ng-click="fourthForm.$setPristine()">Reset</button>
@@ -183,8 +183,7 @@
             </div>
             <div class="form-group">
                 <label>Favorite Fruit:</label>
-                <input class="form-control" ng-model="fifthExample.fruit" vmsg type="text" ng-maxlength="5" required message-trigger="immediate" />
-                <p class="help-block">And this one will show immediately</p>
+                <input class="form-control" ng-model="fifthExample.fruit" vmsg type="text" />
             </div>
             <div class="pull-right">
                 <button class="btn btn-default" type="button" ng-click="fifthForm.$setPristine()">Reset</button>

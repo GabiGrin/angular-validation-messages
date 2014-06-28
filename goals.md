@@ -17,7 +17,7 @@ Validation directive goals:
 
 -V Decide, and switch to a more isolated module name
 -V Rename directive names
--Upload demo page to github.io
+-V Upload demo page to github.io
 -Work on readme, add specs
 -Use JSHint + JSLint
 -Publish to bower
