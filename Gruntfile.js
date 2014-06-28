@@ -48,7 +48,7 @@ module.exports = function (grunt) {
                 }
             },
             jsTest: {
-                files: ['test/spec/{,*/}*.js','karma.conf.js'],
+                files: ['test/spec/{,*/}*.js','src/*.js','karma.conf.js'],
                 tasks: ['test']
             },
             styles: {
@@ -165,7 +165,7 @@ module.exports = function (grunt) {
 
         concat: {
             dist: {
-                src: ['src/*.js', '!src/*old*.js'],
+                src: ['src/module.js', 'src/*.js','!src/*old*.js'],
                 dest: 'dist/angular-validation-messages.js'
             },
             copyhack: {

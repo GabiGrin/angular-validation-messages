@@ -11,6 +11,19 @@ Validation directive goals:
 -Relies solely on ng-model to work, and can be attached to any other directive that may need validation
 -Native bootstrap support
 
+
+
+--Next:
+
+-V Decide, and switch to a more isolated module name
+-V Rename directive names
+-V Upload demo page to github.io
+-Work on readme, add specs
+-Use JSHint + JSLint
+-Publish to bower
+-Test bower install from scratch
+
+
 - TODO: think about whether it should pollute the scope or not - maybe consider transcluding
 
 
