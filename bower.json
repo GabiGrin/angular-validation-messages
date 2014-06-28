@@ -1,7 +1,20 @@
 {
-  "name": "validations-demo",
-  "version": "0.0.0",
-    "appPath":"demo",
+  "name": "angular-validation-messages",
+  "version": "0.1.0",
+  "appPath": "demo",
+  "main": "dist/",
+  "ignore": [
+    "images/",
+    "javascripts/",
+    "node_modules/",
+    "stylesheets/",
+    "test/",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
     "angular": "1.2.15",
     "jquery": "~1.11.0"
@@ -9,6 +22,19 @@
   "devDependencies": {
     "angular-mocks": "1.2.15",
     "angular-scenario": "1.2.15"
-  }
-
+  },
+  "homepage": "http://gabigrin.github.io/angular-validation-messages/",
+  "authors": [
+    "GabiG <gabrielg@wix.com>"
+  ],
+  "description": "Highly customizable directives to add validation messages to your forms easily.",
+  "keywords": [
+    "angular",
+    "validation",
+    "validations",
+    "form",
+    "inputs",
+    "directive"
+  ],
+  "license": "MIT"
 }
