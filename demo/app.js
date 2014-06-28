@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('validationsApp', ['gg.vmsgs'])
+    .module('vmsgsDemo', ['gg.vmsgs'])
     .config(function (ValidationsHelperProvider) {
 
     });
@@ -9,14 +9,9 @@ angular
 
 'use strict';
 
-angular.module('validationsApp')
+angular.module('vmsgsDemo')
     .controller('MainCtrl', function ($scope, $timeout, $http) {
         $scope.msgs = [];
-        $scope.awesomeThings = [
-            'HTML5 Boilerplate',
-            'AngularJS',
-            'Karma'
-        ];
 
         $scope.submitForm = function () {
             console.log('Submitting form!');
