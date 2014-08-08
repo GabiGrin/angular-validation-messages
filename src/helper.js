@@ -23,8 +23,8 @@
                     required: 'Field %FieldName% is required!',
                     number: 'Please insert a valid number',
                     fallback: 'There is a problem with this field. Please try again',
-                    min: 'This field must be higher than %minimum%',
-                    max: 'This field must be lower than %maximum%'
+                    min: 'This field must be at least %minimum%',
+                    max: 'This field must be at most %maximum%'
                 },
                 validMessages = {
                     default: 'Good job!'
@@ -38,11 +38,14 @@
                 defaultOptions = {
                     inputMessageTrigger: messageTriggers.onBlur,
                     scrollToFirstError: true,
+                    parentErrorClass:'has-error',
                     focusFirstError: true,
                     scrollDistance: 50,
                     scrollSpeed: 'fast',
                     errorClass: 'validation-error',
                     animationClass: '',
+
+                    //this shouldn't be overidden edited unless you know what you are doing
                     baseTemplate: '<div ng-show="showMessage || _forceShowMessage"></div>',
                     notificationTemplate: '<span class="small text-danger">{{errorMessage}}</span>'
 
@@ -75,6 +78,10 @@
                 return this;
             };
 
+            this.setParentErrorClass= function (parentErrorClass) {
+                defaultOptions.parentErrorClass=parentErrorClass;
+            };
+
             this.setAnimationClass = function (className) {
                 defaultOptions.animationClass = className;
                 return this;
@@ -101,10 +108,9 @@
             };
 
 
-            this.$get = function () {
-                //todo, separate to getType > getMessage > renderMessage
 
-                var api = {
+            this.$get = function () {
+                return {
                     getType: function (type, element) {
                         //add override to types based on the element. i.e, when an invalid number is entered, the error will be required and not number.
                         return element.attr('type') == 'number' ? 'number' : type;
@@ -119,11 +125,11 @@
 
                         switch (type) {
                             case 'min':
-                                msg.replace('%minimum%', element.attr('min'));
+                                msg = msg.replace('%minimum%', element.attr('min'));
                                 break;
 
                             case 'max':
-                                msg.replace('%maximum%', element.attr('max'));
+                                msg = msg.replace('%maximum%', element.attr('max'));
                                 break;
                         }
 
@@ -138,8 +144,6 @@
                         return errors[0];
                     }
                 };
-
-                return api;
             };
 
 

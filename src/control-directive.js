@@ -119,11 +119,13 @@
                                     scope.showMessage = true;
                                     scope.errorMessage = getMessage();
                                     elm.addClass(defaultOptions.errorClass);
+                                    if (defaultOptions.parentErrorClass) elm.parent().addClass(defaultOptions.parentErrorClass);
                                 }
                                 else {
                                     scope.showMessage = false;
                                     scope.errorMessage = '';
                                     elm.removeClass(defaultOptions.errorClass);
+                                    elm.parent().removeClass(defaultOptions.parentErrorClass);
                                 }
                             }
 
