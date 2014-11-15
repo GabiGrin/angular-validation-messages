@@ -3,16 +3,16 @@
  */
 'use strict';
 (function () {
-  function ModelDirective(YavdHelper, $parse) {
+  function ModelDirective(ValidationMessagesHelper, $parse) {
     return {
-      require: ['ngModel', '^yavd'],
+      require: ['ngModel', '^vmsgForm'],
       restrict: 'A',
       compile: function () {
         return function postLink(scope, elem, attrs, ctrls) {
-          var localOpts = $parse(attrs.vld || '')(scope);
+          var localOpts = $parse(attrs.vmsg || '')(scope);
           var formOpts = ctrls[1].getOptions();
-          var opts = YavdHelper.getOptions(localOpts, formOpts);
-          var messageElem = YavdHelper.createMessageElement(scope, opts);
+          var opts = ValidationMessagesHelper.getOptions(localOpts, formOpts);
+          var messageElem = ValidationMessagesHelper.createMessageElement(scope, opts);
           var ngModelCtrl = ctrls[0];
           var showMessageIfInvalid = function () {
             if (ngModelCtrl.$invalid) {
@@ -78,7 +78,7 @@
             return ngModelCtrl.$error;
           }, function (newError) {
             if (ngModelCtrl.$invalid) {
-              scope.errorMessage = YavdHelper.getErrorMessage(newError, elem, opts);
+              scope.errorMessage = ValidationMessagesHelper.getErrorMessage(newError, elem, opts);
             }
           }, true);
 
@@ -87,7 +87,7 @@
     };
   }
 
-  angular.module('gg.yavd')
-    .directive('vld', ['YavdHelper', '$parse', ModelDirective]);
+  angular.module('gg.vmsgs')
+    .directive('vmsg', ['ValidationMessagesHelper', '$parse', ModelDirective]);
 })();
 

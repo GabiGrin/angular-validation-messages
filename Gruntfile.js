@@ -14,11 +14,12 @@ module.exports = function (grunt) {
         // the files to concatenate
         src: ['src/**/module.js', 'src/**/*.js'],
         // the location of the resulting JS file
-        dest: 'dist/angular-yavd.js'
+        dest: 'dist/angular-validation-messages.js'
       }
     },
+    clean: ['dist'],
     uglify: {
-      //'dist/angular-heatmap.min.js':'dist/angular-heatmap.js'
+      'dist/angular-validation-messages.min.js':'dist/angular-validation-messages.js'
     },
     jshint: {
       options: {
@@ -55,7 +56,7 @@ module.exports = function (grunt) {
     cssmin: {
       myTarget: {
         files: {
-          'dist/angular-yavd.css': 'src/style.css'
+          'dist/angular-validation-messages.css': 'src/style.css'
         }
       }
     },
@@ -75,4 +76,5 @@ module.exports = function (grunt) {
   });
   grunt.registerTask('package', ['cssmin', 'jshint', 'concat', 'karma']);
   grunt.registerTask('serve', ['package', 'connect', 'watch']);
+  grunt.registerTask('build', ['clean','package', 'uglify']);
 };

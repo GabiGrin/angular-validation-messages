@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function Yavd($parse) {
+  function ValidationMessagesForm($parse) {
     return {
       restrict: 'A',
       require: 'form',
@@ -9,9 +9,9 @@
         return {
           pre: function preLink(scope, elem, attrs) {
 
-            scope.formOpts = $parse(attrs.yavd || '')(scope);
+            scope.formOpts = $parse(attrs.vmsgForm || '')(scope);
             scope.$watch(function () {
-              return attrs.yavd;
+              return attrs.vmsgForm;
             }, function (opts){
               scope.formOpts = $parse(opts || '')(scope);
             });
@@ -34,7 +34,7 @@
     };
   }
 
-  angular.module('gg.yavd')
-    .directive('yavd', ['$parse', Yavd]);
+  angular.module('gg.vmsgs')
+    .directive('vmsgForm', ['$parse', ValidationMessagesForm]);
 })();
 

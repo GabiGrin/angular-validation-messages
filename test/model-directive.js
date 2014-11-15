@@ -15,28 +15,28 @@ describe('base usage: model directive', function () {
   }
 
   beforeEach(function () {
-    module('gg.yavd');
-    inject(function (_$compile_, _$rootScope_, $document, _YavdHelper_) {
+    module('gg.vmsgs');
+    inject(function (_$compile_, _$rootScope_, $document, _ValidationMessagesHelper_) {
       $compile = _$compile_;
       $scope = _$rootScope_.$new();
       body = $document.find('body').empty();
-      helper = _YavdHelper_;
+      helper = _ValidationMessagesHelper_;
     });
-    form = createElem('<form yavd></form>');
+    form = createElem('<form vmsg-form></form>');
   });
 
   it('should not work without parent form', function () {
     expect(function () {
-      createElem('<input ng-model="test" vld/>');
+      createElem('<input ng-model="test" vmsg/>');
     }).toThrow();
 
     expect(function () {
-      createElem('<form yavd><input ng-model="test" vld/></form>');
+      createElem('<form vmsg-form><input ng-model="test" vmsg/></form>');
     }).not.toThrow();
   });
 
   it('should have an empty message element', function () {
-    var form = createElem('<form yavd><input ng-model="test" vld/></form>');
+    var form = createElem('<form vmsg-form><input ng-model="test" vmsg/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
     expect(messageElement).toBeTruthy();
@@ -45,7 +45,7 @@ describe('base usage: model directive', function () {
   });
 
   it('shows error message when item is invalid and blurred', function () {
-    var form = createElem('<form yavd><input ng-model="test" required vld/></form>');
+    var form = createElem('<form vmsg-form><input ng-model="test" required vmsg/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
     expect(messageElement[0]).toBeHidden();
@@ -61,7 +61,7 @@ describe('base usage: model directive', function () {
   });
 
   it('hides the error message as soon as the item is valid', function () {
-    var form = createElem('<form yavd><input ng-model="test" required vld/></form>');
+    var form = createElem('<form vmsg-form><input ng-model="test" required vmsg/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
     input.triggerHandler('blur');
@@ -75,7 +75,7 @@ describe('base usage: model directive', function () {
   });
 
   it('changes the error type when needed', function () {
-    var form = createElem('<form yavd><input ng-model="test" required minlength="4" vld/></form>');
+    var form = createElem('<form vmsg-form><input ng-model="test" required minlength="4" vmsg/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
     $scope.$digest();
@@ -102,19 +102,19 @@ describe('option overrides: model directive', function () {
   }
 
   beforeEach(function () {
-    module('gg.yavd');
-    inject(function (_$compile_, _$rootScope_, $document, _YavdHelper_) {
+    module('gg.vmsgs');
+    inject(function (_$compile_, _$rootScope_, $document, _ValidationMessagesHelper_) {
       $compile = _$compile_;
       $scope = _$rootScope_.$new();
       body = $document.find('body').empty();
-      helper = _YavdHelper_;
+      helper = _ValidationMessagesHelper_;
     });
   });
 
   //show triggers
   it('should support show keydown trigger', function () {
     helper.setOptions({showTrigger: 'keydown'});
-    var form = createElem('<form yavd><input ng-model="test" required vld/></form>');
+    var form = createElem('<form vmsg-form><input ng-model="test" required vmsg/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
 
@@ -130,7 +130,7 @@ describe('option overrides: model directive', function () {
   it('should support show submit trigger', function () {
     helper.setOptions({showTrigger: 'submit'});
 
-    var form = createElem('<form yavd><input ng-model="test" required vld/></form>');
+    var form = createElem('<form vmsg-form><input ng-model="test" required vmsg/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
 
@@ -144,13 +144,13 @@ describe('option overrides: model directive', function () {
   it('throws error when unsupported show trigger is used', function () {
     helper.setOptions({showTrigger: 'unsupported'});
     expect(function () {
-      createElem('<form yavd><input ng-model="test" required vld/></form>');
+      createElem('<form vmsg-form><input ng-model="test" required vmsg/></form>');
     }).toThrow();
   });
 
   it('should support change hide trigger', function () {
     helper.setOptions({hideTrigger: 'keydown'});
-    var form = createElem('<form yavd><input ng-model="test" required vld/></form>');
+    var form = createElem('<form vmsg-form><input ng-model="test" required vmsg/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
 
@@ -166,13 +166,13 @@ describe('option overrides: model directive', function () {
   it('throws error when unsupported hide trigger is used', function () {
     helper.setOptions({hideTrigger: 'unsupported'});
     expect(function () {
-      createElem('<form yavd><input ng-model="test" required vld/></form>');
+      createElem('<form vmsg-form><input ng-model="test" required vmsg/></form>');
     }).toThrow();
   });
 
   it('supports changing template via helper', function () {
     helper.setOptions({messageTemplate: '<a>{{errorMessage}}</a>'});
-    var form = createElem('<form yavd><input ng-model="test" required vld/></form>');
+    var form = createElem('<form vmsg-form><input ng-model="test" required vmsg/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
 
@@ -181,21 +181,21 @@ describe('option overrides: model directive', function () {
   });
 
   it('supports changing template via input', function () {
-    var form = createElem('<form yavd><input ng-model="test" required vld="{messageTemplate: \'<a></a>\'}"/></form>');
+    var form = createElem('<form vmsg-form><input ng-model="test" required vmsg="{messageTemplate: \'<a></a>\'}"/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
     expect(messageElement[0].tagName).toBe('A');
   });
 
   it('supports changing template via form', function () {
-    var form = createElem('<form yavd="{messageTemplate: \'<a></a>\'}"><input ng-model="test" required vld/></form>');
+    var form = createElem('<form vmsg-form="{messageTemplate: \'<a></a>\'}"><input ng-model="test" required vmsg/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
     expect(messageElement[0].tagName).toBe('A');
   });
 
   it('will get first input settings, if form settings are also given', function () {
-    var form = createElem('<form yavd="{messageTemplate: \'<a></a>\'}"><input ng-model="test" required vld="{messageTemplate: \'<p></p>\'}"/></form>');
+    var form = createElem('<form vmsg-form="{messageTemplate: \'<a></a>\'}"><input ng-model="test" required vmsg="{messageTemplate: \'<p></p>\'}"/></form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');
     expect(messageElement[0].tagName).toBe('P');
@@ -203,9 +203,9 @@ describe('option overrides: model directive', function () {
 
   it('supports parent class changing (for bootstrap)', function () {
     var form = createElem(
-        '<form yavd="{messageTemplate: \'<a></a>\'}">' +
+        '<form vmsg-form="{messageTemplate: \'<a></a>\'}">' +
         '<div class="form-group">' +
-        '<input ng-model="test" required vld/>' +
+        '<input ng-model="test" required vmsg/>' +
         '</div>' +
         '</form>');
     var formGroup = form.find('div');
@@ -222,8 +222,8 @@ describe('option overrides: model directive', function () {
   });
 
   it('should support custom error messages', function () {
-    var form = createElem('<form yavd>' +
-      '<input ng-model="test" required vld="{errorMessages:{required: \'Must fill this one!\'}}"/>' +
+    var form = createElem('<form vmsg-form>' +
+      '<input ng-model="test" required vmsg="{errorMessages:{required: \'Must fill this one!\'}}"/>' +
       '</form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');

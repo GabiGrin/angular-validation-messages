@@ -12,7 +12,7 @@ describe('form directive tests', function () {
   }
 
   beforeEach(function () {
-    module('gg.yavd');
+    module('gg.vmsgs');
     form = null;
     inject(function (_$compile_, _$rootScope_, $document) {
       $compile = _$compile_;
@@ -24,16 +24,16 @@ describe('form directive tests', function () {
 
   it('should not work in non ng-form elements', function () {
     expect(function () {
-      createElem('<div yavd>');
+      createElem('<div vmsg-form>');
     }).toThrow();
 
     expect(function () {
-      createElem('<p yavd>');
+      createElem('<p vmsg-form>');
     }).toThrow();
   });
 
   it('should not let invalid forms submit themselves', function () {
-    var form = createElem('<form yavd name="form" ng-submit="submit()"></form>');
+    var form = createElem('<form vmsg-form name="form" ng-submit="submit()"></form>');
     $scope.submit = function () {
       console.log('whoops');
     };
@@ -49,8 +49,8 @@ describe('form directive tests', function () {
   });
 
   it('should make all children validation errors visible when trying to submit', function () {
-    var form = createElem('<form yavd name="form" ng-submit="submit()">' +
-      '<input vld required ng-model="value1"/>' +
+    var form = createElem('<form vmsg-form name="form" ng-submit="submit()">' +
+      '<input vmsg required ng-model="value1"/>' +
       '<input ng-minlength="4" ng-model="value2"/>' +
       '</form>');
     var input1 = angular.element(form.children()[0]);
@@ -73,8 +73,8 @@ describe('form directive tests', function () {
 
   it('should support custom error messages from form', function () {
     $scope.opts = {errorMessages: {pattern: 'Must be the secret word!'}};
-    var form = createElem('<form yavd="opts">' +
-      '<input ng-model="test" pattern="shh" vld/>' +
+    var form = createElem('<form vmsg-form="opts">' +
+      '<input ng-model="test" pattern="shh" vmsg/>' +
       '</form>');
     var input = form.find('input');
     var messageElement = input.data('message-element');

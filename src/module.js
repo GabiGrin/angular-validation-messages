@@ -1,2 +1,2 @@
 'use strict';
-angular.module('gg.yavd', []);
+angular.module('gg.vmsgs', []);

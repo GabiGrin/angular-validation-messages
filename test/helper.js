@@ -6,9 +6,9 @@ describe('helper', function () {
   var helper;
 
   beforeEach(function () {
-    module('gg.yavd');
-    inject(function (YavdHelper) {
-      helper = YavdHelper;
+    module('gg.vmsgs');
+    inject(function (ValidationMessagesHelper) {
+      helper = ValidationMessagesHelper;
     });
   });
 
@@ -144,9 +144,9 @@ describe('helper', function () {
   var $scope;
 
   beforeEach(function () {
-    module('gg.yavd');
-    inject(function (YavdHelper, $rootScope) {
-      helper = YavdHelper;
+    module('gg.vmsgs');
+    inject(function (ValidationMessagesHelper, $rootScope) {
+      helper = ValidationMessagesHelper;
       $scope = $rootScope.$new();
     });
   });

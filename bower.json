@@ -1,19 +1,22 @@
 {
-  "name": "angular-yet-another-validations-directive",
+  "name": "angular-validation-messages",
   "version": "0.1.1",
+  "main": "dist/",
+  "homepage": "http://gabigrin.github.io/angular-validation-messages/",
   "authors": [
     "GabiGrin <gabi.grinberg@gmail.com>"
   ],
-  "main": "dist/yavd.min.js",
-  "repository": "git@github.com:GabiGrin/angular-yet-another-validations-directive.git",
-  "description": "Simple to use, highly customizable validations directive for AngularJS",
+  "description": "Add error messages to your forms by adding a simple attribute",
   "keywords": [
     "angular",
-    "directive",
     "validation",
     "validations",
     "form",
-    "input"
+    "ux",
+    "messages",
+    "usability",
+    "inputs",
+    "directive"
   ],
   "license": "MIT",
   "ignore": [
