@@ -1,14 +1,22 @@
 {
-  "name": "angular-validation-messages",
-  "version": "0.1.0",
-  "appPath": "demo",
-  "main": "dist/",
+  "name": "angular-yet-another-validations-directive",
+  "version": "0.1.1",
+  "authors": [
+    "GabiGrin <gabi.grinberg@gmail.com>"
+  ],
+  "main": "dist/yavd.min.js",
+  "repository": "git@github.com:GabiGrin/angular-yet-another-validations-directive.git",
+  "description": "Simple to use, highly customizable validations directive for AngularJS",
+  "keywords": [
+    "angular",
+    "directive",
+    "validation",
+    "validations",
+    "form",
+    "input"
+  ],
+  "license": "MIT",
   "ignore": [
-    "images/",
-    "javascripts/",
-    "node_modules/",
-    "stylesheets/",
-    "test/",
     "**/.*",
     "node_modules",
     "bower_components",
@@ -16,25 +24,9 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.2.15",
-    "jquery": "~1.11.0"
+    "angular": "~1.3.0"
   },
   "devDependencies": {
-    "angular-mocks": "1.2.15",
-    "angular-scenario": "1.2.15"
-  },
-  "homepage": "http://gabigrin.github.io/angular-validation-messages/",
-  "authors": [
-    "GabiGrin <gabi.grinberg@gmail.com>"
-  ],
-  "description": "Highly customizable directives to add validation messages to your forms easily.",
-  "keywords": [
-    "angular",
-    "validation",
-    "validations",
-    "form",
-    "inputs",
-    "directive"
-  ],
-  "license": "MIT"
+    "angular-mocks": "~1.3.2"
+  }
 }

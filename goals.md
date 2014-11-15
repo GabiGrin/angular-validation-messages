@@ -19,7 +19,7 @@ Validation directive goals:
 -V Rename directive names
 -V Upload demo page to github.io
 -Work on readme, add specs
--Use JSHint + JSLint
+-Use JSHint
 -Publish to bower
 -Test bower install from scratch
 

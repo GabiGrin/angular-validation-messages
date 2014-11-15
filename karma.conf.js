@@ -1,67 +1,72 @@
 // Karma configuration
-// http://karma-runner.github.io/0.10/config/configuration-file.html
+// Generated on Wed Oct 29 2014 12:17:06 GMT+0200 (IST)
 
-module.exports = function (config) {
-    config.set({
-        // base path, that will be used to resolve files and exclude
-        basePath: '',
+module.exports = function(config) {
+  config.set({
 
-        // testing framework to use (jasmine/mocha/qunit/...)
-        frameworks: ['jasmine'],
-
-        // list of files / patterns to load in the browser
-        files: [
-            'test/lib/jquery.js',
-            'test/lib/angular.js',
-            'test/lib/angular-mocks.js',
-            'test/lib/jasmine-dom.js',
-//      'test/lib/angular-scenario.js',
-            'dist/angular-validation-messages.js',
-            'test/spec/**/*.js'
-        ],
-
-        // list of files / patterns to exclude
-        exclude: [],
-
-        // web server port
-        port: 9999,
-
-        // level of logging
-        // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-        logLevel: config.LOG_INFO,
+    // base path that will be used to resolve all patterns (eg. files, exclude)
+    basePath: '',
 
 
-        // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: false,
+    // frameworks to use
+    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    frameworks: ['jasmine'],
 
 
-        // Start these browsers, currently available:
-        // - Chrome
-        // - ChromeCanary
-        // - Firefox
-        // - Opera
-        // - Safari (only Mac)
-        // - PhantomJS
-        // - IE (only Windows)
-        browsers: ['PhantomJS'],
+    // list of files / patterns to load in the browser
+    files: [
+//      'bower_components/jquery/dist/jquery.js',
+      'bower_components/angular/angular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+    // 'dist/**/*.js',
+    'src/module.js',
+    'src/**/*.js',
+    'test/**/*.js'
+    ],
 
 
-        // Continuous Integration mode
-        // if true, it capture browsers, run tests and exit
-        singleRun: true,
-        reporters:['progress','coverage'],
-        preprocessors: {
-            // source files, that you wanna generate coverage for
-            // do not include tests or libraries
-            // (these files will be instrumented by Istanbul)
-            'dist/angular-validation-messages.js': ['coverage']
-        },
+    // list of files to exclude
+    exclude: [
+    ],
 
-        // optionally, configure the reporter
-        coverageReporter: {
-            type: 'lcov',
-            dir: 'coverage/',
-            file:'lcov.info'
-        }
-    });
+
+    // preprocess matching files before serving them to the browser
+    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+        'src/**/*.js': ['coverage']
+    },
+
+
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['progress', 'coverage', 'notify'],
+
+
+    // web server port
+    port: 9876,
+
+
+    // enable / disable colors in the output (reporters and logs)
+    colors: true,
+
+
+    // level of logging
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    logLevel: config.LOG_INFO,
+
+
+    // enable / disable watching file and executing tests whenever any file changes
+    autoWatch: true,
+
+
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: ['PhantomJS'],
+
+
+    // Continuous Integration mode
+    // if true, Karma captures browsers, runs the tests and exits
+    singleRun: true
+  });
 };

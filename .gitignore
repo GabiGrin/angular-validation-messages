@@ -2,4 +2,6 @@
 node_modules/
 goals.md
 demo/bower_components
-.idea/
+bower_components
+.idea
+*.sublime-project

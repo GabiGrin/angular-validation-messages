@@ -1,151 +1,114 @@
 /**
- * Created by Gabriel_Grinberg on 6/13/14.
+ * Created by Gabriel_Grinberg on 11/14/14.
  */
-
 (function () {
-    'use strict';
-    angular.module('gg.vmsgs')
-        .provider('ValidationsHelper', function () {
-            var customMessageRenders = {
-                minlength: function (fieldValue, element, fieldName) {
-                    var minimumLength = element.attr('ng-minlength');
-                    return '"' + fieldValue + '" is too short, at least ' + minimumLength + ' characters is required';
-                },
-                maxlength: function (fieldValue, element, fieldName) {
-                    var maximumLength = element.attr('ng-maxlength');
-                    return '"' + fieldValue + '" is too long, less than ' + maximumLength + ' characters is required';
-                }
-            };
+  'use strict';
+  function YavdHelper($compile) {
 
+    var defaultOptions = {
+      hideClassName: 'ng-hide',
+      messageClassName: 'validation-message',
+      messageTemplate: '<span>{{errorMessage}}</span>',
+      showTrigger: 'blur',
+      hideTrigger: 'valid',
 
-            var errorMessages = {
-                    email: '"%FieldValue%" is not a valid e-mail address. You must enter a valid email!',
-                    required: 'Field %FieldName% is required!',
-                    number: 'Please insert a valid number',
-                    fallback: 'There is a problem with this field. Please try again',
-                    min: 'This field must be at least %minimum%',
-                    max: 'This field must be at most %maximum%'
-                },
-                validMessages = {
-                    default: 'Good job!'
-                },
-                messageTriggers = {
-                    onBlur: 'blur',
-                    dontShow: 'none',
-                    immediate: 'immediate',
-                    onDirty: 'dirty'
-                },
-                defaultOptions = {
-                    inputMessageTrigger: messageTriggers.onBlur,
-                    scrollToFirstError: true,
-                    parentErrorClass:'has-error',
-                    focusFirstError: true,
-                    scrollDistance: 50,
-                    scrollSpeed: 'fast',
-                    errorClass: 'validation-error',
-                    animationClass: '',
+      //for overriding error messages
+      errorMessages: {},
 
-                    //this shouldn't be overidden edited unless you know what you are doing
-                    baseTemplate: '<div ng-show="showMessage || _forceShowMessage"></div>',
-                    notificationTemplate: '<span class="small text-danger">{{errorMessage}}</span>'
+      //to support boostrap styling
+      parentContainerClassName: 'form-group',
+      parentErrorClassName: 'has-error'
+    };
 
-                },
-                typePriorities = {
-                    required: -1
-                };
+    return {
+      setOptions: function (opts) {
+        defaultOptions = angular.extend({}, defaultOptions, opts || {});
+      },
+      getOptions: function (opts, formOpts) {
+        return angular.extend({}, defaultOptions, formOpts || {}, opts || {});
+      },
+      showTriggers: ['blur', 'submit', 'keydown'],
+      hideTriggers: ['valid', 'keydown'],
 
-
-            this.setMessage = function (type, message) {
-                errorMessages[type] = message;
-                return this;
-            };
-
-            this.getMessage = function (type) {
-                return errorMessages[type];
-            };
-
-            this.setCustomRenderer = function (type, fn) {
-                customMessageRenders[type] = fn;
-                return this;
-            };
-
-            this.getCustomRender = function (type) {
-                return customMessageRenders[type];
-            };
-
-            this.setErrorClass = function (className) {
-                defaultOptions.errorClass = className;
-                return this;
-            };
-
-            this.setParentErrorClass= function (parentErrorClass) {
-                defaultOptions.parentErrorClass=parentErrorClass;
-            };
-
-            this.setAnimationClass = function (className) {
-                defaultOptions.animationClass = className;
-                return this;
-            };
-
-            this.setTypePriority = function (type, priority) {
-                if (isNaN(priority)) throw new Error('Priority must be a number');
-                typePriorities[type] = priority;
-                return this;
-            };
-
-            this.setNotificationTemplate = function (template) {
-                if (!/{{\s*errorMessage\s*}}/.test(template)) {
-                    console.warn('Overriden templates must include {{errorMessage}} to properly display messages!');
-                }
-                defaultOptions.notificationTemplate = template;
-            };
-
-            this.setValidNotificationTemplate = function (template) {
-                if (!/{{\s*validMessage\s*}}/.test(template)) {
-                    console.warn('Overriden templates must include {{validMessage}} to properly display messages!');
-                }
-                defaultOptions.validMessageTemplate = template;
-            };
-
-
-
-            this.$get = function () {
-                return {
-                    getType: function (type, element) {
-                        //add override to types based on the element. i.e, when an invalid number is entered, the error will be required and not number.
-                        return element.attr('type') == 'number' ? 'number' : type;
-                    },
-                    getMessage: function (type) {
-                        return errorMessages[type] || errorMessages.fallback;
-                    },
-                    renderMessage: function (message, type, element, fieldName, fieldValue) {
-                        var msg = message
-                            .replace('%FieldValue%', fieldValue)
-                            .replace('%FieldName%', fieldName || '');
-
-                        switch (type) {
-                            case 'min':
-                                msg = msg.replace('%minimum%', element.attr('min'));
-                                break;
-
-                            case 'max':
-                                msg = msg.replace('%maximum%', element.attr('max'));
-                                break;
-                        }
-
-                        return msg;
-                    },
-                    defaultOptions: defaultOptions,
-                    messageTriggers: messageTriggers,
-                    getPrioritizedErrorType: function (errors) {
-                        errors.sort(function (a, b) {
-                            return (typePriorities[b] || 0 ) - (typePriorities[a] || 0);
-                        });
-                        return errors[0];
-                    }
-                };
-            };
-
-
+      //these also define the order of rendering
+      errorKeys: ['required', 'minlength', 'maxlength', 'pattern', 'min', 'max'],
+      errorMessages: {
+        required: {
+          default: 'This field is required',
+          email: 'A valid e-mail address is required',
+          number: 'A valid number is required',
+          date: 'A valid date is required',
+          week: 'A valid week is required',
+          url: 'A valid url is required',
+          month: 'A valid month is required'
+        },
+        minlength: 'This field must be at least {minlength} chars',
+        maxlength: 'This field must be at least {maxlength} chars',
+        min: {
+          default: 'This field must be higher than {min}',
+          number: 'This number must be higher than {min}',
+          date: 'This date must be after {min}',
+          week: 'This week must be after {min}',
+          month: 'This month must be after {min}'
+        },
+        max: {
+          default: 'This field must be lower than {max}',
+          number: 'This number must be lower than {max}',
+          date: 'This date must be before {max}',
+          week: 'This week must be before {max}',
+          month: 'This month must be before {max}'
+        },
+        pattern: 'This field must match a specific pattern {pattern}'
+      },
+      renderError: function (msg) {
+        var args;
+        args = arguments;
+        if (args.length === 2 && args[1] !== null && typeof args[1] === 'object') {
+          args = args[1];
+        }
+        return msg.replace(/{([^}]*)}/g, function (match, key) {
+          return (typeof args[key] !== 'undefined' ? args[key] : match);
         });
+      },
+      _getErrorMessage: function (errorKey, inputType, params, opts) {
+        var errorMessageFromOpts = opts && opts.errorMessages && opts.errorMessages[errorKey];
+        var errorMessageObject = errorMessageFromOpts || this.errorMessages[errorKey];
+
+        if (errorMessageObject) {
+          return this.renderError(errorMessageObject[inputType] || errorMessageObject.default || errorMessageObject, params);
+        } else {
+          throw 'Error message not supported for type ' + errorKey + ' and inputType ' + inputType;
+        }
+      },
+      getRenderParameters: function (elem) {
+        var params = {};
+        ['minlength', 'maxlength', 'min', 'max', 'pattern'].forEach(function (attr) {
+          var calculatedAttr = elem.attr(attr) || elem.attr('ng-' + attr);
+          if (calculatedAttr) {
+            params[attr] = calculatedAttr;
+          }
+        });
+        return params;
+      },
+      getErrorMessage: function ($error, elem, opts) {
+        var inputType = elem.attr('type');
+        var selectedError = '';
+        var renderParameters = this.getRenderParameters(elem);
+        this.errorKeys.forEach(function (errorKey) {
+          if (!selectedError && $error[errorKey]) {
+            selectedError = errorKey;
+          }
+        });
+        return this._getErrorMessage(selectedError, inputType, renderParameters, opts);
+      },
+      createMessageElement: function (scope, opts) {
+        return $compile(opts.messageTemplate)(scope)
+          .addClass(opts.messageClassName)
+          .addClass(opts.hideClassName);
+      }
+    };
+  }
+
+  angular.module('gg.yavd')
+    .factory('YavdHelper', ['$compile', YavdHelper]);
 })();
