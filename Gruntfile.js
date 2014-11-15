@@ -60,6 +60,13 @@ module.exports = function (grunt) {
         }
       }
     },
+    coveralls: {
+      options: {
+        // LCOV coverage file relevant to every target
+        src: 'coverage/*/lcov.info',
+        force: true
+      }
+    },
     connect: {
       server: {
         options: {
@@ -76,5 +83,5 @@ module.exports = function (grunt) {
   });
   grunt.registerTask('package', ['cssmin', 'jshint', 'concat', 'karma']);
   grunt.registerTask('serve', ['package', 'connect', 'watch']);
-  grunt.registerTask('build', ['clean','package', 'uglify']);
+  grunt.registerTask('build', ['clean','package', 'uglify','coveralls']);
 };
