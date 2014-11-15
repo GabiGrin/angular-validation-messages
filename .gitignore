@@ -5,3 +5,4 @@ demo/bower_components
 bower_components
 .idea
 *.sublime-project
+coverage
