@@ -1,7 +1,7 @@
 {
   "name": "angular-validation-messages",
   "version": "0.1.1",
-  "main": "dist/",
+  "main": "dist/angular-validation-messages.js",
   "homepage": "http://gabigrin.github.io/angular-validation-messages/",
   "authors": [
     "GabiGrin <gabi.grinberg@gmail.com>"
