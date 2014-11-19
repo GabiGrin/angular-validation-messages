@@ -43,7 +43,7 @@
           month: 'A valid month is required'
         },
         minlength: 'This field must be at least {minlength} chars',
-        maxlength: 'This field must be at least {maxlength} chars',
+        maxlength: 'This field must be less than {maxlength} chars',
         min: {
           default: 'This field must be higher than {min}',
           number: 'This number must be higher than {min}',
