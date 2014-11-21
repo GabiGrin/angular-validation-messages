@@ -4,43 +4,35 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/highlightjs/styles/monokai.css">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-validation-messages/dist/angular-validation-messages.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/highlightjs/highlight.pack.js"></script>
+    <script src="bower_components/angular-highlightjs/angular-highlightjs.js"></script>
+    <script src="src/demo.js"></script>
+
+    <script id="e1js">
+        angular.module('demo')
+                .controller('Example1Controller', function ($scope) {
+                    $scope.showMessage = false;
+                    $scope.showSubmitMessage = function () {
+                        $scope.showMesage = true;
+                    };
+                });
+    </script>
+
     <title>Angular-validation-messages by GabiGrin</title>
 </head>
 
 <body ng-app="demo">
-<div id="container">
-    <div class="inner">
 
-        <header>
-            <h1>Angular-validation-messages</h1>
-
-            <h2>A highly customizable set of directives for AngularJS to create and display validation messages for forms, and increase your app&#39;s usability.</h2>
-        </header>
-
-        <section id="downloads" class="clearfix">
-            <a href="https://github.com/GabiGrin/angular-validation-messages/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-            <a href="https://github.com/GabiGrin/angular-validation-messages/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-            <a href="https://github.com/GabiGrin/angular-validation-messages" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-            <p>
-                <a href="https://travis-ci.org/GabiGrin/angular-validation-messages"><img src="https://travis-ci.org/GabiGrin/angular-validation-messages.svg?branch=master" alt="Build Status"></a>
-                <a href="https://coveralls.io/r/GabiGrin/angular-validation-messages?branch=master"><img src="https://coveralls.io/repos/GabiGrin/angular-validation-messages/badge.png?branch=master" alt="Coverage Status"></a>
-            </p>
-
-
-
-    </div>
-</div>
+<div ng-include="'src/main.html'"></div>
 </body>
 </html>
