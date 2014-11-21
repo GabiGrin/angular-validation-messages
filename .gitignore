@@ -1,8 +1,5 @@
-.tmp/
-node_modules/
-goals.md
-demo/bower_components
+# Created by .gitignore support plugin (hsz.mobi)
 bower_components
+node_modules
 .idea
-*.sublime-project
 coverage
