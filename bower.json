@@ -1,0 +1,20 @@
+{
+  "name": "vmsgs-demo",
+  "version": "0.2.0",
+  "homepage": "https://github.com/GabiGrin/angular-validation-messages",
+  "authors": [
+    "GabiG <gabrielg@wix.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-mocks": "~1.3.2"
+  }
+}
