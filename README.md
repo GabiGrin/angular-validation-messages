@@ -50,12 +50,17 @@ $scope.doSomething(){
 ```
 
 ##Installation and usage
-'bower install angular-valiadtion-messages'
+Use bower:
+```
+bower install angular-valiadtion-messages
+```
+Or just [download](https://github.com/GabiGrin/angular-validation-messages/archive/master.zip) the files
 And then add the following files to your html:
 ```
 <link rel="stylesheet" type="text/css" href="bower_components/angular-validation-messages/dist/angular-validation-messages.css">
 <script src="bower_components/angular-validation-messages/dist/angular-validation-messages.js"></script>
 ```
+Add `'gg.vmsgs'` to your app's dependencies
 
 Now just add the "vmsg-form" directive to your forms, and "vmsg" to the inputs you wish to show validation messages for.
 
@@ -68,3 +73,5 @@ Now just add the "vmsg-form" directive to your forms, and "vmsg" to the inputs y
 * Override options either globally, per form or per control
 * Supports different show/hide message triggers
 * 100% test coverage
+* No jQuery used, no other dependencies - 100% AngularJS
+* Out of the box bootstrap parent form-group has-error support
