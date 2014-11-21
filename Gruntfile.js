@@ -54,9 +54,9 @@ module.exports = function (grunt) {
       }
     },
     cssmin: {
-      myTarget: {
+      combine: {
         files: {
-          'dist/angular-validation-messages.css': 'src/style.css'
+          'dist/angular-validation-messages.css': ['src/style.css']
         }
       }
     },
