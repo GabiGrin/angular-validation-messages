@@ -10,6 +10,15 @@ angular.module('demo', ['gg.vmsgs', 'ui.bootstrap', 'hljs'])
     return function link() {
     }
   })
+  .directive('example', function () {
+    return {
+      restrict: 'E',
+      templateUrl: 'src/examples/template.html',
+      scope: {
+        num: '@'
+      }
+    };
+  })
   .directive('demo', function ($compile) {
     return {
       scope: {
@@ -19,7 +28,7 @@ angular.module('demo', ['gg.vmsgs', 'ui.bootstrap', 'hljs'])
       priority: 10,
       template: '<div></div>',
       link: function (scope, elem, attrs) {
-        scope.$watch(function (){
+        scope.$watch(function () {
           var el = $(scope.selector)[0];
           var isCode = el && el.tagName === 'SCRIPT';
           return el && el[isCode ? 'innerHTML' : 'outerHTML'];

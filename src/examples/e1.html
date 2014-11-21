@@ -1,6 +1,18 @@
 <div id="e1" ng-controller="Example1Controller">
-    <form vmsg-form ng-submit="showSubmitMessage()">
-
+    <form vmsg-form ng-submit="showSubmitMessage()" novalidate>
+        <div class="control">
+            <label>Name (required):</label>
+            <input ng-model="name" type="text" vmsg required ng-minlength="5"/>
+        </div>
+        <div class="control">
+            <label>Email (required):</label>
+            <input ng-model="email" type="email" vmsg required/>
+        </div>
+        <div class="control">
+            <label>Webpage URL:</label>
+            <input ng-model="webpage" vmsg type="url"/>
+        </div>
+        <button>Submit</button>
     </form>
     <h2 class="success-text" ng-show="showMessage">Form submitted!</h2>
 </div>
