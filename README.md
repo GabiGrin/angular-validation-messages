@@ -3,7 +3,68 @@
 angular-validation-messages
 ===========================
 
-A highly customizable set of directives for AngularJS to create and display validation messages for forms, and increase your app's usability.
+Add validation messages to your forms in a breeze
 
-Rsoon
+##Why?
+When writing forms, a you will soon find yourself writing the same code over and over again, just to display what is invalid in the form.
+This directive turns this:
+```
+<form name="myForm" ng-submit="doSomething()">
+    <input type="text" name="myName" ng-minlength="3" ng-model="data.myName" required/>
+    <div ng-show="myForm.$dirty">
+        <span ng-show="myForm.myEmail.$error.required">This field is required</span>
+        <span ng-show="myForm.myEmail.$error.minlength">Please enter at least 20 chars</span>
+    </div>
+    
+    <input type="url" name="myUrl" ng-model="data.myUrl" required/>
+    <div ng-show="myForm.$dirty">
+        <span ng-show="myForm.myUrl.$error.required">Please enter a valid URL</span>
+    </div>
+    
+    <input type="number" name="myAge" ng-model="data.myAge"/>
+    <div ng-show="myForm.$dirty">
+        <span ng-show="myForm.myAge.$error.required">Please enter a valid number</span>
+    </div>
+</form>
 
+//inside controller
+$scope.doSomething(){
+    if (myForm.$valid){
+        //then actually do something
+    }
+}
+```
+
+into this:
+```
+<form name="myForm" ng-submit="doSomething()" vmsgs-form>
+    <input type="text" name="myName" ng-minlength="3" ng-model="data.myName" required vmsg/>
+    <input type="url" name="myUrl" ng-model="data.myUrl" required vmsg/>
+    <input type="number" name="myAge" ng-model="data.myAge" vmsg/>
+</form>
+
+//inside controller
+$scope.doSomething(){
+  //actually do something
+}
+```
+
+##Installation and usage
+'bower install angular-valiadtion-messages'
+And then add the following files to your html:
+```
+<link rel="stylesheet" type="text/css" href="bower_components/angular-validation-messages/dist/angular-validation-messages.css">
+<script src="bower_components/angular-validation-messages/dist/angular-validation-messages.js"></script>
+```
+
+Now just add the "vmsg-form" directive to your forms, and "vmsg" to the inputs you wish to show validation messages for.
+
+##Features:
+* Just-add-water form validation messages
+* Allows custom message templates to be used
+* Does not require "name" attribute to be intact
+* Submit only valid forms
+* Customize error messages 
+* Override options either globally, per form or per control
+* Supports different show/hide message triggers
+* 100% test coverage
