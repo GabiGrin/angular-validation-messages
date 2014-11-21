@@ -78,7 +78,7 @@
             return ngModelCtrl.$error;
           }, function (newError) {
             if (ngModelCtrl.$invalid) {
-              scope.errorMessage = ValidationMessagesHelper.getErrorMessage(newError, elem, opts);
+              messageElem.find('msg').text(ValidationMessagesHelper.getErrorMessage(newError, elem, opts));
             }
           }, true);
 

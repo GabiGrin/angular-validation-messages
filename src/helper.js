@@ -8,7 +8,7 @@
     var defaultOptions = {
       hideClassName: 'ng-hide',
       messageClassName: 'validation-message',
-      messageTemplate: '<span>{{errorMessage}}</span>',
+      messageTemplate: '<span><msg></msg></span>',
       showTrigger: 'blur',
       hideTrigger: 'valid',
 
@@ -31,7 +31,7 @@
       hideTriggers: ['valid', 'keydown'],
 
       //these also define the order of rendering
-      errorKeys: ['required', 'minlength', 'maxlength', 'pattern', 'min', 'max'],
+      errorKeys: ['required', 'email', 'url', 'minlength', 'maxlength', 'pattern', 'min', 'max'],
       errorMessages: {
         required: {
           default: 'This field is required',
@@ -42,6 +42,8 @@
           url: 'A valid url is required',
           month: 'A valid month is required'
         },
+        url: 'A valid url is required',
+        email: 'A valid e-mail address is required',
         minlength: 'This field must be at least {minlength} chars',
         maxlength: 'This field must be less than {maxlength} chars',
         min: {

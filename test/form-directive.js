@@ -3,7 +3,8 @@ describe('form directive tests', function () {
   var form,
     $compile,
     $scope,
-    body;
+    body,
+    service;
 
   function createElem(template) {
     var elem = $compile(template)($scope);
@@ -14,10 +15,11 @@ describe('form directive tests', function () {
   beforeEach(function () {
     module('gg.vmsgs');
     form = null;
-    inject(function (_$compile_, _$rootScope_, $document) {
+    inject(function (_$compile_, _$rootScope_, $document, ValidationMessagesHelper) {
       $compile = _$compile_;
       $scope = _$rootScope_;
       body = $document.find('body').empty();
+      service = ValidationMessagesHelper;
     });
 
   });
@@ -83,5 +85,52 @@ describe('form directive tests', function () {
     input.triggerHandler('blur');
     $scope.$digest();
     expect(messageElement.text()).toBe('Must be the secret word!');
+  });
+
+  it('should work with various inputs', function () {
+    var form = createElem('<form vmsg-form>' +
+      '<input ng-model="name" required vmsg/>' +
+      '<input ng-model="email" type="email" required vmsg/>' +
+      '<input ng-model="url" type="url" vmsg/>' +
+      '<input ng-model="age" type="number" required vmsg/>' +
+      '</form>');
+    var nameInput = angular.element(form.find('input')[0]);
+    var emailInput = angular.element(form.find('input')[1]);
+    var urlInput = angular.element(form.find('input')[2]);
+    var ageInput = angular.element(form.find('input')[3]);
+
+    var nameMessage = nameInput.data('message-element')[0];
+    var emailMessage = emailInput.data('message-element')[0];
+    var urlMessage = urlInput.data('message-element')[0];
+    var ageMessage = ageInput.data('message-element')[0];
+
+    $scope.$digest();
+    form.triggerHandler('submit');
+    $scope.$digest();
+
+    expect(nameMessage).toBeVisible();
+    expect(emailMessage).toBeVisible();
+    expect(urlMessage).toBeHidden();
+    expect(ageMessage).toBeVisible();
+
+    expect(nameMessage).toHaveText(service._getErrorMessage('required'));
+    expect(emailMessage).toHaveText(service._getErrorMessage('required', 'email'));
+    expect(ageMessage).toHaveText(service._getErrorMessage('required', 'number'));
+
+    $scope.url='not an url';
+    $scope.name = 'Bob';
+    $scope.email = 'not an email';
+    $scope.age = 22;
+
+    $scope.$digest();
+    form.triggerHandler('submit');
+    $scope.$digest();
+    expect(nameMessage).toBeHidden();
+    expect(emailMessage).toBeVisible();
+    expect(urlMessage).toBeVisible();
+    expect(ageMessage).toBeHidden();
+
+    expect(emailMessage).toHaveText(service._getErrorMessage('email'));
+    expect(urlMessage).toHaveText(service._getErrorMessage('url'));
   });
 });

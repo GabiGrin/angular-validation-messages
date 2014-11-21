@@ -29,6 +29,7 @@
 
     "describe": false,
     "it": false,
+    "iit": false,
     "inject": false,
     "beforeEach": false,
     "afterEach": false,
