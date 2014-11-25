@@ -1,5 +1,5 @@
 <div id="e1" ng-controller="Example1Controller">
-    <form vmsg-form="{messageTemplate: '<div><span class=\'glyphicon glyphicon-remove-circle\'></span><msg></msg><a tooltip=\'Templates are compiled by Angular, so you can use directives here!\'>(?)</a></div>', messageClassName:'custom-class'}" ng-submit="showSubmitMessage()" novalidate>
+    <form vmsg-form="{messageTemplate: '<div><span class=\'glyphicon glyphicon-remove-circle\'></span><msg></msg><a tooltip=\'Templates are compiled by Angular, so you can use directives here!\'>(?)</a></div>', messageClassName:'custom-class'}" ng-submit="showSubmitMessage()">
         <div class="form-group">
             <label>Name (required):</label>
             <input ng-model="name" class="form-control" type="text" vmsg required ng-minlength="5"/>
