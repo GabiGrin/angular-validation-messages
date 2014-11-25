@@ -11,6 +11,7 @@
             pre: function preLink(scope, elem, attrs) {
 
               scope.formOpts = $parse(attrs.vmsgForm || '')(scope);
+              elem.attr('novalidate', 'novalidate');
               scope.$watch(function () {
                 return attrs.vmsgForm;
               }, function (opts) {

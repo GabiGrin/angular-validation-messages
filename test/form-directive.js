@@ -34,6 +34,11 @@ describe('form directive tests', function () {
     }).toThrow();
   });
 
+  it('adds novalidate to forms', function () {
+    var form = createElem('<form vmsg-form name="form" ng-submit="submit()"></form>');
+    expect(form.attr('novalidate')).toBeDefined();
+  });
+
   it('should not let invalid forms submit themselves', function () {
     var form = createElem('<form vmsg-form name="form" ng-submit="submit()"></form>');
     $scope.submit = function () {
@@ -117,7 +122,7 @@ describe('form directive tests', function () {
     expect(emailMessage).toHaveText(service._getErrorMessage('required', 'email'));
     expect(ageMessage).toHaveText(service._getErrorMessage('required', 'number'));
 
-    $scope.url='not an url';
+    $scope.url = 'not an url';
     $scope.name = 'Bob';
     $scope.email = 'not an email';
     $scope.age = 22;
