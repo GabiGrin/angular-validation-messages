@@ -11,62 +11,11 @@ PS: It doesn't cover everything yet, more to come.
 
 ##What it does
 
-This directive adds automatic validation messages to your forms, by just adding the directive to your form and fields.
-It also prevents your form from being submitted unless it's valid
+This directive adds automatic validation messages to your forms, by just adding it to your form and fields.
+It also prevents your form from being submitted unless it's valid.
 For example: 
 ![example image](http://s27.postimg.org/amxtpgwsz/Screen_Shot_2014_11_25_at_10_56_40_PM.png)
 
-It comes with a bunch of predefined messages for commonly used validation messages, such as email, number, minlength, url and more. _You can always custom them if you think the stock messages suck!_
-
-##What it doesn't do
-It doesn't create custom validation rules, there are plenty of modules for that.
-It doesn't make your forms prettier, use Bootstrap/Foundation/Zimit/Custom css for that.
-
-
-##How
-Use bower:
-```
-bower install angular-valiadtion-messages
-```
-Or just [download](https://github.com/GabiGrin/angular-validation-messages/archive/master.zip) the files
-And then add the following files to your html:
-```
-<link rel="stylesheet" type="text/css" href="bower_components/angular-validation-messages/dist/angular-validation-messages.css">
-<script src="bower_components/angular-validation-messages/dist/angular-validation-messages.js"></script>
-```
-Add `'gg.vmsgs'` to your app's dependencies
-
-Now just add the "vmsg-form" directive to your forms, and "vmsg" to the inputs you wish to show validation messages for.
-
-##Overriding options
-To override global options, use `ValidationMessagesHelper.setOptions(yourOptions)` in a run block.  
-Both vmsg-form and vmsg directive can also receive an options object. When multiple overrides are used, the most specific one "wins".
-
-###Supported options
-Name | Explanation | Accepts| Default
----|---|---
-showTrigger| trigger to show messages | blur/keydown/submit | blur
-hideTrigger| trigger to hide messages | valid/keydown|valid
-messageClassName| class name added to the message dom element | any string | 'validation-message'
-messageTemplate| html to use as the template for the messages. | any valid html, with 1 root, containing a <msg></msg> element (which will receive the message | <span><msg></msg></span>
-hideClassName | class that is added to hide messages | any classname | ng-hide
-parentErrorClassName | adds (or removes) a class name to a field's parent element, if it matches the 'parentErrorClassName' option. Good for using with bootstrap, where you want to add 'has-error' to the parent div.form-group | any string | 'has-error'  
-parentContainerClassName | only if this class name is present in the parent element, parentErrorClassName will be applied | any string | 'form-group'
-errorMessages| allows you to override error messages for specific errors. The error messages passed will be combined with the default ones (using angular.extend)| any valid object | please check src/helper.js:36 
-
-##Features
-* Just-add-water form validation messages
-* Allows custom message templates to be used
-* Does not require "name" attribute to be intact
-* Submit only valid forms
-* Customize error messages 
-* Override options either globally, per form or per control
-* Supports different show/hide message triggers
-* 100% test coverage
-* No jQuery used, no other dependencies - 100% AngularJS
-* Out of the box bootstrap parent form-group has-error support
-
-##Why
 When writing forms, a you will soon find yourself writing the same code over and over again, just to display what is invalid in the form.
 This directive turns this:
 ```
@@ -110,7 +59,55 @@ $scope.doSomething(){
 }
 ```
 
-##Caveats:
+It comes with a bunch of predefined messages for commonly used validation messages, such as email, number, minlength, url and more. _You can always override them if you think the stock messages suck!_
+
+##What it doesn't do
+It doesn't create custom validation rules, there are plenty of modules for that.
+It doesn't make your forms prettier, use Bootstrap/Foundation/Zimit/Custom css for that.
+
+##How
+Use bower:
+```
+bower install angular-valiadtion-messages
+```
+Or just [download](https://github.com/GabiGrin/angular-validation-messages/archive/master.zip) the files and add the following files to your html:
+```
+<link rel="stylesheet" type="text/css" href="bower_components/angular-validation-messages/dist/angular-validation-messages.css">
+<script src="bower_components/angular-validation-messages/dist/angular-validation-messages.js"></script>
+```
+Add `'gg.vmsgs'` to your app dependencies (`angular.module('yourApp', ['gg.vmsgs']`)
+
+Now just add the "vmsg-form" directive to your forms, and "vmsg" to the inputs you wish to show validation messages for.
+
+##Features
+* Just-add-water form validation messages
+* Allows custom message templates to be used
+* Does not require "name" attribute to be intact
+* Submit only valid forms
+* Customize error messages 
+* Override options either globally, per form or per control
+* Supports different show/hide message triggers
+* 100% test coverage
+* No jQuery used, no other dependencies - 100% AngularJS
+* Out of the box bootstrap parent form-group has-error support
+
+##Overriding options
+To override global options, use `ValidationMessagesHelper.setOptions(yourOptions)` in a run block.  
+vmsg-form and vmsg directive can also receive an options object. When multiple overrides are used, the most specific one "wins".
+
+###Supported options
+Name | Explanation | Accepts| Default
+---|---|---
+showTrigger| trigger to show messages | blur/keydown/submit | blur
+hideTrigger| trigger to hide messages | valid/keydown|valid
+messageClassName| class name added to the message dom element | any string | 'validation-message'
+messageTemplate| html to use as the template for the messages. | any valid html, with 1 root, containing a <msg></msg> element (which will receive the message | <span><msg></msg></span>
+hideClassName | class that is added to hide messages | any classname | ng-hide
+parentErrorClassName | adds (or removes) a class name to a field's parent element, if it matches the 'parentErrorClassName' option. Good for using with bootstrap, where you want to add 'has-error' to the parent div.form-group | any string | 'has-error'  
+parentContainerClassName | only if this class name is present in the parent element, parentErrorClassName will be applied | any string | 'form-group'
+errorMessages| allows you to override error messages for specific errors. The error messages passed will be combined with the default ones (using angular.extend)| any valid object | please check src/helper.js:36 
+
+##Caveats
 *The vmsg-form directive will add the "novalidate" attribute automatically, so the browser doesn't catch the validation issues by itself.
 *It doesn't support hiding the messages when the form is pristine at the moment. Will be added in the near future.
 *When overriding the message html template, you must have only one root element, and include the <msg></msg> where you want the message displayed. There is no validation for this yet, so be aware.
