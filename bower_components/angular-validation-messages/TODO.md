@@ -1,0 +1,2 @@
+- add nice looking styles
+- add readme

@@ -1,0 +1,21 @@
+<div id="e1" ng-controller="Example1Controller">
+    <form vmsg-form="{messageTemplate: '<div><span class=\'glyphicon glyphicon-remove-circle\'></span><msg></msg><a tooltip=\'Templates are compiled by Angular, so you can use directives here!\'>(?)</a></div>', messageClassName:'custom-class'}" ng-submit="showSubmitMessage()" novalidate>
+        <div class="form-group">
+            <label>Name (required):</label>
+            <input ng-model="name" class="form-control" type="text" vmsg required ng-minlength="5"/>
+        </div>
+        <div class="form-group">
+            <label>Email (required):</label>
+            <input ng-model="email" class="form-control" type="email" vmsg required/>
+        </div>
+        <div class="form-group">
+            <label>Webpage URL:</label>
+            <input ng-model="webpage"  class="form-control" vmsg type="url"/>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+    </form>
+    <h2 class="success-text" ng-show="showMessage">
+        <span class="glyphicon glyphicon-check"></span>
+        Form submitted!
+    </h2>
+</div>

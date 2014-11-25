@@ -1,3 +1,51 @@
-body{
-    padding:100px 200px;
+body {
+    padding: 100px 200px;
+}
+
+.tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0px 0px 5px 5px;
+    padding: 10px;
+}
+
+.success-text {
+    color: #00bf2f
+}
+
+.demo-container:not(:last-of-type) {
+    border-bottom: 3px dashed #444444;
+    padding-bottom: 50px;
+}
+
+.demo-container:not(:first-of-type) {
+    margin-top: 50px;
+}
+
+div[pageitems] {
+    margin-bottom: 100px;
+}
+
+menu {
+    position: fixed;
+    width: 150px;
+    left: 10px;
+    top: 207px;
+}
+
+menu .active {
+    background-color: #eee;
+}
+
+.custom-class {
+    border: 1px solid rgb(168, 0, 0);
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: rgb(255, 230, 230);
+    color: rgb(144, 0, 0);
+}
+.custom-class .glyphicon {
+    margin-right: 5px;
 }

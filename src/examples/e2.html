@@ -1,0 +1,24 @@
+<div id="e2" ng-controller="Example2Controller">
+    <form vmsg-form ng-submit="showSubmitMessage()" novalidate>
+        <div class="form-group">
+            <label>Favorite long word:</label>
+            <input ng-model="word" class="form-control" type="text" vmsg="{showTrigger: 'keydown'}" required ng-minlength="15"/>
+            <p class="help-block">If this field is invalid, it will show the message on key down</p>
+        </div>
+        <div class="form-group">
+            <label>Score:</label>
+            <input ng-model="score" class="form-control" type="number" vmsg="{showTrigger: 'submit'}" required min="5"/>
+            <p class="help-block">This field will show it's message only if there is an invalid submit attempt</p>
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <input ng-model="pw" class="form-control" type="password" vmsg="{hideTrigger: 'keydown'}" required ng-minlength="8"/>
+            <p class="help-block">This field will hide it's validation message as soon as the user types something, regardless of if it's valid or not (and it'll show again on a submit attempt or blur)</p>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+    </form>
+    <h2 class="success-text" ng-show="showMessage">
+        <span class="glyphicon glyphicon-check"></span>
+        Form submitted!
+    </h2>
+</div>

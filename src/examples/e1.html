@@ -1,18 +1,21 @@
 <div id="e1" ng-controller="Example1Controller">
     <form vmsg-form ng-submit="showSubmitMessage()" novalidate>
-        <div class="control">
+        <div class="form-group">
             <label>Name (required):</label>
-            <input ng-model="name" type="text" vmsg required ng-minlength="5"/>
+            <input ng-model="name" class="form-control" type="text" vmsg required ng-minlength="5"/>
         </div>
-        <div class="control">
+        <div class="form-group">
             <label>Email (required):</label>
-            <input ng-model="email" type="email" vmsg required/>
+            <input ng-model="email" class="form-control" type="email" vmsg required/>
         </div>
-        <div class="control">
+        <div class="form-group">
             <label>Webpage URL:</label>
-            <input ng-model="webpage" vmsg type="url"/>
+            <input ng-model="webpage"  class="form-control" vmsg type="url"/>
         </div>
-        <button>Submit</button>
+        <button class="btn btn-primary">Submit</button>
     </form>
-    <h2 class="success-text" ng-show="showMessage">Form submitted!</h2>
+    <h2 class="success-text" ng-show="showMessage">
+        <span class="glyphicon glyphicon-check"></span>
+        Form submitted!
+    </h2>
 </div>

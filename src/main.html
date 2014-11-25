@@ -1,12 +1,33 @@
 <h1>Angular-validation-messages Demo Page</h1>
+<pagemenu affix></pagemenu>
 
-<h2>Coming soon..</h2>
+<div pageitems selector="menu-item">
+    <div class="demo-container">
+        <h2 class="menu-item" id="1">Basic usage</h2>
 
-<div class="demo-container" style="padding-bottom:100px;" ng-hide="true">
-    <h2>Basic usage</h2>
-    <p class="description">
+        <p class="description">
+            First 2 fields are required, try submitting the form before they are filled, so see the validation messages in action.
+            The messages are also triggered when a field is blurred but still invalid.
+        </p>
+        <example num="1"></example>
+    </div>
+    <div class="demo-container">
+        <h2 class="menu-item" id="2">Triggers</h2>
 
-    </p>
-    <example num="1"></example>
+        <p class="description">
+            You can override the show/hide triggers for the validation messages, to either show them immediately when the user starts the interaction, or only when trying to submit.
+        </p>
+        <example num="2"></example>
+    </div>
+    <div class="demo-container">
+        <h2 class="menu-item" id="3">Custom message template</h2>
+
+        <p class="description">
+            You can use a custom message template if wanted, and like all options, you can either set them globally, per form, or per field. This example will apply it to the whole form.
+            In this example we'll also pass a custom class name for our validation messages. And yep, it's not pretty ;)
+        </p>
+        <example num="3"></example>
+    </div>
+
+    <h4>More demos to come!</h4>
 </div>
-
