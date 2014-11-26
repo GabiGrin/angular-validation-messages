@@ -98,7 +98,7 @@ vmsg-form and vmsg directive can also receive an options object. When multiple o
 ###Supported options
 
 Name | Explanation | Accepts | Default  
---- | --- | ---  
+--- | --- | --- | ---
 showTrigger | trigger to show messages | blur/keydown/submit | blur  
 hideTrigger | trigger to hide messages | valid/keydown | valid  
 messageClassName | class name added to the message dom element | any string | 'validation-message'  
