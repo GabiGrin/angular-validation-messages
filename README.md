@@ -61,9 +61,9 @@ $scope.doSomething(){
 
 It comes with a bunch of predefined messages for commonly used validation messages, such as email, number, minlength, url and more. _You can always override them if you think the stock messages suck!_
 
-##What it doesn't do
-It doesn't create custom validation rules, there are plenty of modules for that.
-It doesn't make your forms prettier, use Bootstrap/Foundation/Zimit/Custom css for that.
+##What it doesn't do  
+It doesn't create custom validation rules, there are plenty of modules for that.  
+It doesn't make your forms prettier, use Bootstrap/Foundation/Zimit/Custom css for that.  
 
 ##How
 Use bower:
@@ -93,20 +93,20 @@ Now just add the "vmsg-form" directive to your forms, and "vmsg" to the inputs y
 
 ##Overriding options
 To override global options, use `ValidationMessagesHelper.setOptions(yourOptions)` in a run block.  
-vmsg-form and vmsg directive can also receive an options object. When multiple overrides are used, the most specific one "wins".
+vmsg-form and vmsg directive can also receive an options object. When multiple overrides are used, the most specific one "wins".  
 
 ###Supported options
 
-Name | Explanation | Accepts| Default
----|---|---
-showTrigger| trigger to show messages | blur/keydown/submit | blur
-hideTrigger| trigger to hide messages | valid/keydown|valid
-messageClassName| class name added to the message dom element | any string | 'validation-message'
-messageTemplate| html to use as the template for the messages. | any valid html, with 1 root, containing a <msg></msg> element (which will receive the message | <span><msg></msg></span>
-hideClassName | class that is added to hide messages | any classname | ng-hide
-parentErrorClassName | adds (or removes) a class name to a field's parent element, if it matches the 'parentErrorClassName' option. Good for using with bootstrap, where you want to add 'has-error' to the parent div.form-group | any string | 'has-error'  
-parentContainerClassName | only if this class name is present in the parent element, parentErrorClassName will be applied | any string | 'form-group'
-errorMessages| allows you to override error messages for specific errors. The error messages passed will be combined with the default ones (using angular.extend)| any valid object | please check src/helper.js:36
+Name | Explanation | Accepts | Default  
+--- | --- | ---  
+showTrigger | trigger to show messages | blur/keydown/submit | blur  
+hideTrigger | trigger to hide messages | valid/keydown | valid  
+messageClassName | class name added to the message dom element | any string | 'validation-message'  
+messageTemplate | html to use as the template for the messages. | any valid html, with 1 root, containing a <msg></msg> element (which will receive the message | <span><msg></msg></span>  
+hideClassName | class that is added to hide messages | any classname | ng-hide  
+parentErrorClassName | adds (or removes) a class name to a field's parent element, if it matches the 'parentErrorClassName' option. Good for using with bootstrap, where you want to add 'has-error' to the parent div.form-group | any string | 'has-error'    
+parentContainerClassName | only if this class name is present in the parent element, parentErrorClassName will be applied | any string | 'form-group'  
+errorMessages | allows you to override error messages for specific errors. The error messages passed will be combined with the default ones (using angular.extend) | any valid object | please check src/helper.js:36  
 
 
 ##Caveats
