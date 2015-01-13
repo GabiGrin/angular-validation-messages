@@ -12,6 +12,7 @@
         messageTemplate: '<span><msg></msg></span>',
         showTrigger: 'blur',
         hideTrigger: 'valid',
+        dummy: false,
 
         //for overriding error messages
         errorMessages: {},
