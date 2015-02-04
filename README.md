@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/GabiGrin/angular-validation-messages.svg?branch=master)](https://travis-ci.org/GabiGrin/angular-validation-messages)
 [![Coverage Status](https://coveralls.io/repos/GabiGrin/angular-validation-messages/badge.png?branch=master)](https://coveralls.io/r/GabiGrin/angular-validation-messages?branch=master)
+[![Code Climate](https://codeclimate.com/github/GabiGrin/angular-validation-messages/badges/gpa.svg)](https://codeclimate.com/github/GabiGrin/angular-validation-messages)
 angular-validation-messages
 ===========================
 
