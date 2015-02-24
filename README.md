@@ -69,7 +69,7 @@ It doesn't make your forms prettier, use Bootstrap/Foundation/Zimit/Custom css f
 ##How
 Use bower:
 ```
-bower install angular-valiadtion-messages
+bower install angular-validation-messages
 ```
 Or just [download](https://github.com/GabiGrin/angular-validation-messages/archive/master.zip) the files and add the following files to your html:
 ```
