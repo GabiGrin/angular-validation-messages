@@ -160,5 +160,27 @@ describe('helper', function () {
     expect(messageElement.text()).toBe('');
   });
 
+  it('should add custom error key if not yet present', function () {
+    var input1 = angular.element('<input type="text"/>');
+    var $error1 = {someNewErrorKey: true};
+
+    expect(helper.errorKeys.length).toBe(8);
+
+    var opts = {
+      errorMessages: {
+        required: {
+          default: 'Custom msg #1',
+          number: 'Number here!'
+        },
+        someNewErrorKey: 'Some new error key message'
+      }
+    };
+
+    helper.setOptions(opts);
+    expect(helper.errorKeys.length).toBe(9);
+
+    expect(helper.getErrorMessage($error1, input1, opts)).toBe('Some new error key message');
+  });
+
 });
 
