@@ -105,8 +105,9 @@ hideTrigger | trigger to hide messages | valid/keydown | valid
 messageClassName | class name added to the message dom element | any string | 'validation-message'  
 messageTemplate | html to use as the template for the messages. | any valid html, with 1 root, containing a <msg></msg> element (which will receive the message | <span><msg></msg></span>  
 hideClassName | class that is added to hide messages | any classname | ng-hide  
-parentErrorClassName | adds (or removes) a class name to a field's parent element, if it matches the 'parentErrorClassName' option. Good for using with bootstrap, where you want to add 'has-error' to the parent div.form-group | any string | 'has-error'    
-parentContainerClassName | only if this class name is present in the parent element, parentErrorClassName will be applied | any string | 'form-group'  
+parentErrorClassName | adds (or removes) a class name to a field's parent element, if it matches the 'parentContainerClassName' option. Good for using with bootstrap, where you want to add 'has-error' to the parent div.form-group | any string | 'has-error'    
+parentSuccessClassName | adds (or removes) a class name to a field's parent element, if it matches the 'parentContainerClassName' option. Good for using with bootstrap, where you want to add 'has-success' to the parent div.form-group.| any string | ''    
+parentContainerClassName | only if this class name is present in the parent element, parentErrorClassName and parentSuccessClassName will be applied | any string | 'form-group'  
 errorMessages | allows you to override error messages for specific errors. The error messages passed will be combined with the default ones (using angular.extend) | any valid object | please check src/helper.js:36  
 
 

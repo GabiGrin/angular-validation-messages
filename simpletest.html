@@ -1,21 +1,35 @@
 <html>
 <head>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="dist/angular-validation-messages.js"></script>
-    <link rel="stylesheet" href="dist/angular-validation-messages.css"/>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="dist/angular-validation-messages.js"></script>
+  <link rel="stylesheet" href="dist/angular-validation-messages.css"/>
 </head>
 <body ng-app="app">
 <form vmsg-form>
+  <div class="form-group">
     <input vmsg required ng-model="model.val1" type="text"/>
     <input vmsg required ng-model="model.val2" type="text"/>
     <input vmsg required ng-model="model.val3" type="text"/>
     <input vmsg required ng-model="model.val4" type="text"/>
-    <button>submit</button>
+  </div>
+  <button>submit</button>
 </form>
 </body>
 <script>
-    angular.module('app', ['gg.vmsgs']);
+  angular.module('app', ['gg.vmsgs']);
 </script>
 
+<style>
+  .form-group {
+    margin: 10px;
+  }
 
+  .has-success {
+    border: 2px solid green;
+  }
+
+  .has-error {
+    border: 2px solid red;
+  }
+</style>
 </html>

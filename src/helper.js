@@ -21,7 +21,8 @@
 
           //to support boostrap styling
           parentContainerClassName: 'form-group',
-          parentErrorClassName: 'has-error'
+          parentErrorClassName: 'has-error',
+          parentSuccessClassName: ''
         };
 
         return {

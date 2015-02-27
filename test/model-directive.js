@@ -201,9 +201,9 @@ describe('option overrides: model directive', function () {
     expect(messageElement[0].tagName).toBe('P');
   });
 
-  it('supports parent class changing (for bootstrap)', function () {
+  it('supports parent class changing (for bootstrap) on error', function () {
     var form = createElem(
-        '<form vmsg-form="{messageTemplate: \'<a></a>\'}">' +
+        '<form vmsg-form>' +
         '<div class="form-group">' +
         '<input ng-model="test" required vmsg/>' +
         '</div>' +
@@ -219,6 +219,37 @@ describe('option overrides: model directive', function () {
     $scope.test = 'one two three';
     $scope.$digest();
     expect(formGroup.hasClass(opts.parentErrorClassName)).toBeFalsy();
+  });
+
+  it('supports parent class changing (for bootstrap) on success', function () {
+    var successClassName = 'has-success';
+    var opts = $scope.opts = {
+      parentSuccessClassName: successClassName
+    };
+    var form = createElem(
+      '<form vmsg-form="opts">' +
+      '<div class="form-group">' +
+      '<input ng-model="test" required vmsg/>' +
+      '</div>' +
+      '</form>');
+    var formGroup = form.find('div');
+    var input = form.find('input');
+
+    expect(formGroup.hasClass(opts.parentSuccessClassName)).toBeFalsy();
+
+    input.triggerHandler('blur');
+    $scope.$digest();
+    expect(formGroup.hasClass(opts.parentSuccessClassName)).toBeFalsy();
+
+    $scope.test = 'one two three';
+    $scope.$digest();
+    input.triggerHandler('blur');
+    expect(formGroup.hasClass(opts.parentSuccessClassName)).toBeTruthy();
+
+    $scope.test = '';
+    input.triggerHandler('blur');
+    $scope.$digest();
+    expect(formGroup.hasClass(opts.parentSuccessClassName)).toBeFalsy();
   });
 
   it('should support custom error messages', function () {

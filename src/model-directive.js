@@ -15,19 +15,28 @@
             var opts = ValidationMessagesHelper.getOptions(localOpts, formOpts);
             var messageElem = ValidationMessagesHelper.createMessageElement(scope, opts);
             var ngModelCtrl = ctrls[0];
-            var showMessageIfInvalid = function () {
+            var elemParent = elem.parent();
+
+            var showStatusMessage = function () {
               if (ngModelCtrl.$invalid) {
                 window.ngModelCtrl = ngModelCtrl;
                 messageElem.removeClass(opts.hideClassName);
                 if (elem.parent().hasClass(opts.parentContainerClassName)) {
-                  elem.parent().addClass(opts.parentErrorClassName);
+                  elemParent.addClass(opts.parentErrorClassName);
+                }
+              } else {
+                if (elemParent.hasClass(opts.parentContainerClassName)) {
+                  console.log('opts.parentSuccessClassName', opts.parentSuccessClassName);
+                  elemParent.addClass(opts.parentSuccessClassName);
                 }
               }
             };
+
             var hideMessage = function () {
               messageElem.addClass(opts.hideClassName);
-              if (elem.parent().hasClass(opts.parentContainerClassName)) {
-                elem.parent().removeClass(opts.parentErrorClassName);
+              if (elemParent.hasClass(opts.parentContainerClassName)) {
+                elemParent.removeClass(opts.parentErrorClassName);
+                elemParent.removeClass(opts.parentSuccessClassName);
               }
             };
 
@@ -39,11 +48,11 @@
               case 'blur':
               case 'keydown':
                 elem.on(opts.showTrigger, function () {
-                  showMessageIfInvalid();
+                  showStatusMessage();
                 });
                 break;
               case 'submit':
-                //we always show the errors when its submitted.. this option is for clarify only
+                //we always show the errors when its submitted.. this option is for clarification only
                 break;
               default:
                 throw 'Show trigger "' + opts.showTrigger + '" is not supported';
@@ -51,7 +60,7 @@
 
             //we'll always show
             scope.$on('submit', function () {
-              showMessageIfInvalid();
+              showStatusMessage();
             });
 
             //set up hide message trigger
