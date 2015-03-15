@@ -100,8 +100,8 @@ vmsg-form and vmsg directive can also receive an options object. When multiple o
 
 Name | Explanation | Accepts | Default  
 --- | --- | --- | ---
-showTrigger | trigger to show messages | blur/keydown/submit | blur  
-hideTrigger | trigger to hide messages | valid/keydown | valid  
+showTrigger | trigger to show messages | blur/keydown/keyup/submit | blur  
+hideTrigger | trigger to hide messages | valid/keydown/keyup | valid  
 messageClassName | class name added to the message dom element | any string | 'validation-message'  
 messageTemplate | html to use as the template for the messages. | any valid html, with 1 root, containing a <msg></msg> element (which will receive the message | <span><msg></msg></span>  
 hideClassName | class that is added to hide messages | any classname | ng-hide  

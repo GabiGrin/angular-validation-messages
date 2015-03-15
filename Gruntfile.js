@@ -19,7 +19,7 @@ module.exports = function (grunt) {
       },
       ngAnnotate: {
         options: {
-          singleQuotes: true,
+          singleQuotes: true
         },
         main: {
           files: {

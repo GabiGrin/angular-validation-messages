@@ -127,6 +127,21 @@ describe('option overrides: model directive', function () {
     expect(messageElement[0]).toBeVisible();
   });
 
+  it('should support show keyup trigger', function () {
+    helper.setOptions({showTrigger: 'keyup'});
+    var form = createElem('<form vmsg-form><input ng-model="test" required vmsg/></form>');
+    var input = form.find('input');
+    var messageElement = input.data('message-element');
+
+    $scope.test = 'something';
+    $scope.$digest();
+    $scope.test = '';
+    $scope.$digest();
+    input.triggerHandler('keyup');
+    $scope.$digest();
+    expect(messageElement[0]).toBeVisible();
+  });
+
   it('should support show submit trigger', function () {
     helper.setOptions({showTrigger: 'submit'});
 

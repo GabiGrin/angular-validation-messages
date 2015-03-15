@@ -47,6 +47,7 @@
             switch (opts.showTrigger) {
               case 'blur':
               case 'keydown':
+              case 'keyup':
                 elem.on(opts.showTrigger, function () {
                   showStatusMessage();
                 });
@@ -75,7 +76,8 @@
                 });
                 break;
               case 'keydown':
-                elem.on('keydown', function () {
+              case 'keyup':
+                elem.on(opts.hideTrigger, function () {
                   hideMessage();
                 });
                 break;
