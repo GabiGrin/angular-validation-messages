@@ -196,7 +196,6 @@ angular.module('gg.vmsgs', []);
                 }
               } else {
                 if (elemParent.hasClass(opts.parentContainerClassName)) {
-                  console.log('opts.parentSuccessClassName', opts.parentSuccessClassName);
                   elemParent.addClass(opts.parentSuccessClassName);
                 }
               }
